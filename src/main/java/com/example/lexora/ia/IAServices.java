@@ -9,13 +9,19 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Miguel
  */
+
+@Service
 public class IAServices {
-    private static final String API_KEY = "HswkxQw32gAuzD1nLx4ML3KOCc955iSu";
+    @Value("${api.key}")
+    private static String API_KEY;
+    
     private static final String URL = "https://api.mistral.ai/v1/chat/completions";
     
     public static String callAI(String prompt) {
