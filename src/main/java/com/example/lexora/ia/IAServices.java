@@ -1,4 +1,3 @@
-
 package com.example.lexora.ia;
 
 import java.io.IOException;
@@ -16,18 +15,22 @@ import org.springframework.stereotype.Service;
  *
  * @author Miguel
  */
-
 @Service
 public class IAServices {
-    @Value("${api.key}")
+
     private static String API_KEY;
-    
+
     private static final String URL = "https://api.mistral.ai/v1/chat/completions";
-    
+
+    @Value("${api.key}")
+    public void setApiKey(String apiKey) {
+        IAServices.API_KEY = apiKey;
+    }
+
     public static String callAI(String prompt) {
 
         OkHttpClient client = new OkHttpClient();
-        
+
         JSONObject message = new JSONObject();
         message.put("role", "user");
         message.put("content", prompt);
@@ -43,7 +46,7 @@ public class IAServices {
                 bodyJson.toString(),
                 MediaType.parse("application/json")
         );
-        
+
         Request request = new Request.Builder()
                 .url(URL)
                 .post(body)
@@ -58,4 +61,3 @@ public class IAServices {
         }
     }
 }
-
