@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +47,7 @@ import org.springframework.data.annotation.CreatedDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "users")
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
