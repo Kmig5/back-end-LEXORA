@@ -1,7 +1,6 @@
 
 package com.example.lexora.client;
 
-import com.example.lexora.user.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lexora/user/client")
 public class ClientController {
+
+    public ClientController(ClientService service) {
+        this.service = service;
+    }
     private ClientService service;
     
     @PostMapping("/createClient")
