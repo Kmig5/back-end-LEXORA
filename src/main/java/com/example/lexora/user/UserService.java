@@ -53,7 +53,6 @@ public class UserService {
         user.setEmail(userNew.getEmail());
         user.setNom(userNew.getNom());
         user.setPrenom(userNew.getPrenom());
-        user.setRole(userNew.getRole());
         user.setPassword(passwHash);
         user.setColor(couleurs.get(choice));
         
@@ -73,7 +72,6 @@ public class UserService {
         user.setEmail(userNew.getEmail());
         user.setNom(userNew.getNom());
         user.setPrenom(userNew.getPrenom());
-        user.setRole(userNew.getRole());
         user.setPassword(userNew.getPassword());
         user.setColor(couleurs.get(choice));
         

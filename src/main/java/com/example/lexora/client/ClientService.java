@@ -36,7 +36,6 @@ class ClientService {
         user.setEmail(userNew.getEmail());
         user.setNom(userNew.getNom());
         user.setPrenom(userNew.getPrenom());
-        user.setRole(userNew.getRole());
         user.setPassword(passwHash);
         user.setColor(couleurs.get(choice));
 

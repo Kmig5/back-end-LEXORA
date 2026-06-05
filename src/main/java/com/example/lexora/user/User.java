@@ -62,7 +62,6 @@ public abstract class User {
     @Column(nullable = false)
     private String password;
     
-    private String role;
     private String color;
     
     private String region;
