@@ -64,6 +64,9 @@ public abstract class User {
     
     private String role;
     private String color;
+    
+    private String region;
+    private String ville;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

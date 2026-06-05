@@ -1,12 +1,17 @@
 package com.example.lexora.avocat;
 
 import com.example.lexora.user.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  *
@@ -19,11 +24,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Avocat extends User {
-    private String couleur;
-    private String specialite;
-    private String region;
-    private String ville;
+public class Avocat extends User {    
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "specialite", columnDefinition = "jsonb")
+    private List<String> specialite = new ArrayList<>();
+    
     private int note;
     
     private boolean isVerified;
