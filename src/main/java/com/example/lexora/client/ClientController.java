@@ -19,7 +19,7 @@ public class ClientController {
     private ClientService service;
     
     @PostMapping("/createClient")
-    public ResponseEntity<String> register(@RequestBody UserDTO userRegister) {
+    public ResponseEntity<String> register(@RequestBody ClientDTO userRegister) {
         
         service.registerClient(userRegister);
 
