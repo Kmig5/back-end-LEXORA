@@ -35,6 +35,7 @@ public class UserService {
         
         if(encoder.matches(passw, userBD.getPassword())){
             UserDTO user = new UserDTO();
+            user.setId(userBD.getId());
             user.setEmail(userBD.getEmail());
             user.setNom(userBD.getNom());
             user.setPrenom(userBD.getPrenom());
