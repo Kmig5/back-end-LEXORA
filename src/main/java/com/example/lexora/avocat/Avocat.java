@@ -27,7 +27,7 @@ import org.hibernate.type.SqlTypes;
 public class Avocat extends User {    
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "specialite", columnDefinition = "jsonb")
-    private List<String> specialite = new ArrayList<>();
+    public List<String> specialite = new ArrayList<>();
     
     private int note;
     

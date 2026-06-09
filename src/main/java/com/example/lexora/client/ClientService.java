@@ -1,6 +1,5 @@
 package com.example.lexora.client;
 
-
 import java.time.Instant;
 import java.util.List;
 import java.util.Random;
@@ -23,24 +22,26 @@ class ClientService {
         this.encoder = encoder;
     }
 
-    public String registerClient(ClientDTO userNew) {
+    public String registerClient(ClientDTO clientNew) {
         List<String> couleurs = List.of("blue", "red", "gray", "yellow", "orange", "violet");
         Random random = new Random();
         int choice = random.nextInt(couleurs.size());
 
-        String passwHash = encoder.encode(userNew.getPassword());
+        String passwHash = encoder.encode(clientNew.getPassword());
 
-        Client user = new Client();
+        Client client = new Client();
 
-        user.setCreatedAt(Instant.EPOCH);
-        user.setEmail(userNew.getEmail());
-        user.setNom(userNew.getNom());
-        user.setPrenom(userNew.getPrenom());
-        user.setPassword(passwHash);
-        user.setColor(couleurs.get(choice));
+        client.setCreatedAt(Instant.EPOCH);
+        client.setEmail(clientNew.getEmail());
+        client.setNom(clientNew.getNom());
+        client.setPrenom(clientNew.getPrenom());
+        client.setPassword(passwHash);
+        client.setColor(couleurs.get(choice));
+        client.setRegion(clientNew.getRegion());
+        client.setVille(clientNew.getVille());
 
-        repo.save(user);
+        repo.save(client);
 
-        return "Bienvenue " + userNew.getPrenom();
+        return "Bienvenue " + clientNew.getPrenom();
     }
 }

@@ -54,6 +54,8 @@ public class UserService {
         user.setNom(userNew.getNom());
         user.setPrenom(userNew.getPrenom());
         user.setPassword(passwHash);
+        user.setRegion(userNew.getRegion());
+        user.setVille(userNew.getVille());
         user.setColor(couleurs.get(choice));
         
         repo.save(user);

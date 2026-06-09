@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lexora/user/avocat")
 public class AvocatController {
+
     private AvocatService service;
 
     @GetMapping
@@ -22,8 +23,9 @@ public class AvocatController {
         return service.getAvocat();
     }
 
-    @PostMapping
-    public ResponseEntity<String> createAvocat(@RequestBody Avocat avocat) {
-        return ResponseEntity.ok(service.postAvocat(avocat));
+    @PostMapping("/createAvocat")
+    public ResponseEntity<String> createAvocat(@RequestBody AvocatDTO avocat) {
+
+        return ResponseEntity.ok(service.registerAvocat(avocat));
     }
 }

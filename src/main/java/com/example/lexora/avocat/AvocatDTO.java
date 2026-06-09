@@ -1,6 +1,8 @@
-package com.example.lexora.client;
+
+package com.example.lexora.avocat;
 
 import java.time.Instant;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,12 +12,12 @@ import lombok.Setter;
  *
  * @author Miguel
  */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-class ClientDTO {
-
+public class AvocatDTO {
     private String nom;
     private String prenom;
     private String email;
@@ -24,4 +26,5 @@ class ClientDTO {
     private String region;
     private String ville;
     private Instant createdAt;
+    private List<String> specialite;
 }
