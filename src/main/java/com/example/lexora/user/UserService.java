@@ -34,7 +34,13 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Remplir les champs");
         
         if(encoder.matches(passw, userBD.getPassword())){
-            return ResponseEntity.ok(userBD);
+            UserDTO user = new UserDTO();
+            user.setEmail(userBD.getEmail());
+            user.setNom(userBD.getNom());
+            user.setPrenom(userBD.getPrenom());
+            user.setVille(userBD.getVille());
+            user.setRegion(userBD.getRegion());
+            return ResponseEntity.ok(user);
         }
         
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERREUR Veuillez reessayer");
