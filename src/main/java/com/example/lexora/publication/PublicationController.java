@@ -21,8 +21,9 @@ public class PublicationController {
     private PublicationService service;
     private ClientRepository repoClient;
 
-    public PublicationController(PublicationService service) {
+    public PublicationController(PublicationService service, ClientRepository repoClient) {
         this.service = service;
+        this.repoClient = repoClient;
     }
 
     @PostMapping("/create")
