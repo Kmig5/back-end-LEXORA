@@ -1,7 +1,5 @@
 package com.example.lexora.avocat;
 
-import com.example.lexora.user.User;
-import com.example.lexora.user.UserDTO;
 import java.time.Instant;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +38,6 @@ public class AvocatService {
 
         Avocat avocat = new Avocat();
 
-        avocat.setCreatedAt(Instant.EPOCH);
         avocat.setEmail(avocatDto.getEmail());
         avocat.setNom(avocatDto.getNom());
         avocat.setPrenom(avocatDto.getPrenom());
@@ -49,6 +46,7 @@ public class AvocatService {
         avocat.setRegion(avocatDto.getRegion());
         avocat.setVille(avocatDto.getVille());
         avocat.setSpecialite(avocatDto.getSpecialite());
+        avocat.setCreatedAt(Instant.now());
 
         repo.save(avocat);
 

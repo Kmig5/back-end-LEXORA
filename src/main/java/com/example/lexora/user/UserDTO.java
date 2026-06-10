@@ -21,10 +21,10 @@ public class UserDTO {
     private String nom;
     private String prenom;
     private String email;
-    private String role;
     private String password;
     private String region;
     private String ville;
+    private String color;
 
     private Instant createdAt;
 }

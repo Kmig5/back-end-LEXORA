@@ -31,7 +31,7 @@ class ClientService {
 
         Client client = new Client();
 
-        client.setCreatedAt(Instant.EPOCH);
+        client.setCreatedAt(Instant.now());
         client.setEmail(clientNew.getEmail());
         client.setNom(clientNew.getNom());
         client.setPrenom(clientNew.getPrenom());

@@ -14,26 +14,27 @@ import org.springframework.stereotype.Service;
  *
  * @author Miguel
  */
-
 @Service
 public class UserService {
+
     private UserRepository repo;
     
     BCryptPasswordEncoder encoder;
-
+    
     public UserService(UserRepository repo, BCryptPasswordEncoder encoder) {
         this.repo = repo;
         this.encoder = encoder;
     }
     
-    public ResponseEntity<?> login(String email, String passw){
+    public ResponseEntity<?> login(String email, String passw) {
         
         User userBD = repo.findByEmail(email);
         
-        if(userBD == null)
+        if (userBD == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Remplir les champs");
+        }
         
-        if(encoder.matches(passw, userBD.getPassword())){
+        if (encoder.matches(passw, userBD.getPassword())) {
             UserDTO user = new UserDTO();
             user.setId(userBD.getId());
             user.setEmail(userBD.getEmail());
@@ -41,13 +42,14 @@ public class UserService {
             user.setPrenom(userBD.getPrenom());
             user.setVille(userBD.getVille());
             user.setRegion(userBD.getRegion());
+            user.setColor(userBD.getColor());
             return ResponseEntity.ok(user);
         }
         
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERREUR Veuillez reessayer");
     }
     
-    public String registerClient(UserDTO userNew){
+    public String registerClient(UserDTO userNew) {
         List<String> couleurs = List.of("blue", "red", "gray", "yellow", "orange", "violet");
         Random random = new Random();
         int choice = random.nextInt(couleurs.size());
@@ -67,10 +69,10 @@ public class UserService {
         
         repo.save(user);
         
-        return "Bienvenue "+userNew.getPrenom();
+        return "Bienvenue " + userNew.getPrenom();
     }
     
-    public String registerAvocat(UserDTO userNew){
+    public String registerAvocat(UserDTO userNew) {
         List<String> couleurs = List.of("blue", "red", "gray", "yellow", "orange", "violet");
         Random random = new Random();
         int choice = random.nextInt(couleurs.size());
@@ -84,9 +86,8 @@ public class UserService {
         user.setPassword(userNew.getPassword());
         user.setColor(couleurs.get(choice));
         
-        
         repo.save(user);
         
-        return "Bienvenue "+userNew.getPrenom();
+        return "Bienvenue " + userNew.getPrenom();
     }
 }
