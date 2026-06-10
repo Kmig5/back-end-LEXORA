@@ -27,11 +27,4 @@ public class UserController {
         return service.login(loginData.get("email"), loginData.get("password"));
     }
 
-    @PostMapping("/register/client")
-    public ResponseEntity<String> register(@RequestBody UserDTO userRegister) {
-        
-        service.registerClient(userRegister);
-
-        return ResponseEntity.ok("Vous avez été enregistré avec succès");
-    }
 }
