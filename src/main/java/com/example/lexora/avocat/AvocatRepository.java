@@ -15,20 +15,22 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
 
-    @Query(value = "SELECT * FROM users WHERE "
-            + "(:region IS NULL OR region = :region) AND "
-            + "(:specialite IS NULL OR CAST(specialite AS text) LIKE CONCAT('%', :specialite, '%')) AND "
-            + "(:annee IS NULL OR annee <= :annee) AND "
-            + "type_utilisateur = 'AVOCAT' AND "
-            + "is_verified = true",
-            countQuery = "SELECT count(*) FROM users WHERE "
-            + "(:region IS NULL OR region = :region) AND "
-            + "(:specialite IS NULL OR CAST(specialite AS text) LIKE CONCAT('%', :specialite, '%')) AND "
-            + "(:annee IS NULL OR annee <= :annee) AND "
-            + "type_utilisateur = 'AVOCAT' AND "
-            + "is_verified = true",
+    @Query(value = "SELECT DISTINCT u.* FROM users u "
+            + "LEFT JOIN avocat_specialites s ON u.id = s.avocat_id WHERE "
+            + "(:region IS NULL OR :region = '' OR LOWER(u.region) = LOWER(:region)) AND "
+            + "(:specialite IS NULL OR :specialite = '' OR LOWER(s.specialite) = LOWER(:specialite)) AND "
+            + "(:annee IS NULL OR u.annee <= :annee) AND "
+            + "u.type_utilisateur = 'AVOCAT' AND "
+            + "u.is_verified = true",
+            countQuery = "SELECT COUNT(DISTINCT u.id) FROM users u "
+            + "LEFT JOIN avocat_specialites s ON u.id = s.avocat_id WHERE "
+            + "(:region IS NULL OR :region = '' OR LOWER(u.region) = LOWER(:region)) AND "
+            + "(:specialite IS NULL OR :specialite = '' OR LOWER(s.specialite) = LOWER(:specialite)) AND "
+            + "(:annee IS NULL OR u.annee <= :annee) AND "
+            + "u.type_utilisateur = 'AVOCAT' AND "
+            + "u.is_verified = true",
             nativeQuery = true)
-    Page<Avocat> rechercherMultiCriteres(
+    Page<Avocat> getAvocatFiltre(
             @Param("region") String region,
             @Param("specialite") String specialite,
             @Param("annee") Integer annee,
