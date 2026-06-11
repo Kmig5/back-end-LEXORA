@@ -15,10 +15,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
 
-    @Query("SELECT a FROM Avocat a WHERE "
-            + "(:region IS NULL OR a.region = :region) AND "
-            + "(:specialite IS NULL OR jsonb_exists(a.specialite, CAST(:specialite AS text))) AND "
-            + "(:annee IS NULL OR a.annee <= :annee)")
+    @Query(value = "SELECT * FROM users WHERE "
+            + "(:region IS NULL OR region = :region) AND "
+            + "(:specialite IS NULL OR jsonb_exists(specialite, CAST(:specialite AS text))) AND "
+            + "(:annee IS NULL OR annee <= :annee) AND "
+            + "type_utilisateur = 'AVOCAT' AND "
+            + "isVerified = true",
+            nativeQuery = true)
     Page<Avocat> rechercherMultiCriteres(
             @Param("region") String region,
             @Param("specialite") String specialite,
