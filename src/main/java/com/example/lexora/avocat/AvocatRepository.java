@@ -22,7 +22,7 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
     Page<Avocat> rechercherMultiCriteres(
             @Param("region") String region,
             @Param("specialite") String specialite,
-            @Param("annee") int annee,
+            @Param("annee") Integer annee,
             Pageable pageable
     );
 }

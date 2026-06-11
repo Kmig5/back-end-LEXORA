@@ -31,7 +31,7 @@ public class AvocatController {
     public Page<Avocat> getAvocatFiltre(
             @RequestParam(required = false) String region,
             @RequestParam(required = false) String specialite,
-            @RequestParam(required = false) int annee) {
+            @RequestParam(required = false) Integer annee) {
         Pageable pageable = PageRequest.of(0, 50);
         
         return service.getAvocatFiltre(region, specialite, annee, pageable);

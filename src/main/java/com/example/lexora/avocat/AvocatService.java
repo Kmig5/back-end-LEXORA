@@ -31,7 +31,7 @@ public class AvocatService {
         return liste = repo.findAll();
     }
 
-    public Page<Avocat> getAvocatFiltre(String region, String specialite, int annee, Pageable pageable) {
+    public Page<Avocat> getAvocatFiltre(String region, String specialite, Integer annee, Pageable pageable) {
         return repo.rechercherMultiCriteres(region, specialite, annee, pageable);
     }
 

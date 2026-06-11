@@ -29,7 +29,7 @@ public class Avocat extends User {
     @Column(name = "specialite", columnDefinition = "jsonb")
     public List<String> specialite = new ArrayList<>();
 
-    private int note;
+    private Integer note;
 
     private boolean isVerified;
 
