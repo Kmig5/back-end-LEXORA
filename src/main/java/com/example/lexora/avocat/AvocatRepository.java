@@ -17,7 +17,13 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
 
     @Query(value = "SELECT * FROM users WHERE "
             + "(:region IS NULL OR region = :region) AND "
-            + "(:specialite IS NULL OR jsonb_exists(specialite, CAST(:specialite AS text))) AND "
+            + "(:specialite IS NULL OR CAST(specialite AS text) LIKE CONCAT('%', :specialite, '%')) AND "
+            + "(:annee IS NULL OR annee <= :annee) AND "
+            + "type_utilisateur = 'AVOCAT' AND "
+            + "is_verified = true",
+            countQuery = "SELECT count(*) FROM users WHERE "
+            + "(:region IS NULL OR region = :region) AND "
+            + "(:specialite IS NULL OR CAST(specialite AS text) LIKE CONCAT('%', :specialite, '%')) AND "
             + "(:annee IS NULL OR annee <= :annee) AND "
             + "type_utilisateur = 'AVOCAT' AND "
             + "is_verified = true",
