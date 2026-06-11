@@ -56,6 +56,8 @@ public abstract class User {
     private String nom;
     private String prenom;
     
+    private String numeroTel;
+    
     @Column(nullable = false, unique = true)
     private String email;
     

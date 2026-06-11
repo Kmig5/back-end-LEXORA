@@ -17,19 +17,23 @@ import org.hibernate.type.SqlTypes;
  *
  * @author Miguel
  */
-
 @Entity
 @DiscriminatorValue("AVOCAT")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class Avocat extends User {    
+public class Avocat extends User {
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "specialite", columnDefinition = "jsonb")
     public List<String> specialite = new ArrayList<>();
-    
+
     private int note;
-    
+
     private boolean isVerified;
+
+    private int honoraire;
+
+    private int annee;
 }
