@@ -27,6 +27,6 @@ public class AvocatDTO {
     private Instant createdAt;
     private List<String> specialite;
     private int honoraire;
-    private int annee;
+    private Integer annee;
     private String description;
 }
