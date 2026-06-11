@@ -20,7 +20,7 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
             + "(:specialite IS NULL OR jsonb_exists(specialite, CAST(:specialite AS text))) AND "
             + "(:annee IS NULL OR annee <= :annee) AND "
             + "type_utilisateur = 'AVOCAT' AND "
-            + "isVerified = true",
+            + "is_verified = true",
             nativeQuery = true)
     Page<Avocat> rechercherMultiCriteres(
             @Param("region") String region,
