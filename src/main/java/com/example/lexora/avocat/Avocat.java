@@ -1,17 +1,18 @@
 package com.example.lexora.avocat;
 
 import com.example.lexora.user.User;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 /**
  *
@@ -25,9 +26,13 @@ import org.hibernate.type.SqlTypes;
 @Getter
 public class Avocat extends User {
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "specialite", columnDefinition = "jsonb")
-    public List<String> specialite = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "avocat_specialites",
+            joinColumns = @JoinColumn(name = "avocat_id")
+    )
+    @Column(name = "specialite")
+    private List<String> specialite = new ArrayList<>();
 
     private Integer note;
 
@@ -36,6 +41,6 @@ public class Avocat extends User {
     private int honoraire;
 
     private Integer annee;
-    
+
     private String description;
 }
