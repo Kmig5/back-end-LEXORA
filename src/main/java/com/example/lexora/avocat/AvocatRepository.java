@@ -16,24 +16,25 @@ import org.springframework.stereotype.Repository;
 public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
 
     @Query(value = "SELECT DISTINCT u.* FROM users u "
-            + "LEFT JOIN avocat_specialites s ON u.id = s.avocat_id WHERE "
-            + "(:region IS NULL OR :region = '' OR LOWER(u.region) = LOWER(:region)) AND "
-            + "(:specialite IS NULL OR :specialite = '' OR LOWER(s.specialite) = LOWER(:specialite)) AND "
-            + "(:annee IS NULL OR u.annee <= :annee) AND "
-            + "u.type_utilisateur = 'AVOCAT' AND "
-            + "u.is_verified = true",
-            countQuery = "SELECT COUNT(DISTINCT u.id) FROM users u "
-            + "LEFT JOIN avocat_specialites s ON u.id = s.avocat_id WHERE "
-            + "(:region IS NULL OR :region = '' OR LOWER(u.region) = LOWER(:region)) AND "
-            + "(:specialite IS NULL OR :specialite = '' OR LOWER(s.specialite) = LOWER(:specialite)) AND "
-            + "(:annee IS NULL OR u.annee <= :annee) AND "
-            + "u.type_utilisateur = 'AVOCAT' AND "
-            + "u.is_verified = true",
-            nativeQuery = true)
-    Page<Avocat> getAvocatFiltre(
+                + "LEFT JOIN avocat_specialites s ON u.id = s.avocat_id WHERE "
+                + "(:region IS NULL OR :region = '' OR LOWER(u.region) = LOWER(:region)) AND "
+                + "(:specialite IS NULL OR :specialite = '' OR LOWER(s.specialite) = LOWER(:specialite)) AND "
+                + "(:annee IS NULL OR u.annee <= :annee) AND "
+                + "u.type_utilisateur = 'AVOCAT' AND "
+                + "u.is_verified = true",
+                countQuery = "SELECT COUNT(DISTINCT u.id) FROM users u "
+                + "LEFT JOIN avocat_specialites s ON u.id = s.avocat_id WHERE "
+                + "(:region IS NULL OR :region = '' OR LOWER(u.region) = LOWER(:region)) AND "
+                + "(:specialite IS NULL OR :specialite = '' OR LOWER(s.specialite) = LOWER(:specialite)) AND "
+                + "(:annee IS NULL OR u.annee <= :annee) AND "
+                + "u.type_utilisateur = 'AVOCAT' AND "
+                + "u.is_verified = true",
+                nativeQuery = true)
+    Page<Avocat> rechercherMultiCriteres(
             @Param("region") String region,
             @Param("specialite") String specialite,
             @Param("annee") Integer annee,
             Pageable pageable
     );
 }
+
