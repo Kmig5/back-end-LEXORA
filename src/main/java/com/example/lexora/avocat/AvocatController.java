@@ -19,28 +19,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lexora/user/avocat")
 public class AvocatController {
-    
+
     private AvocatService service;
-    
+
+    public AvocatController(AvocatService service) {
+        this.service = service;
+    }
+
     @GetMapping
     public List<Avocat> getAvocat() {
         return service.getAvocat();
     }
-    
+
     @GetMapping("/filtreAvocat")
     public Page<Avocat> getAvocatFiltre(
             @RequestParam(required = false) String region,
             @RequestParam(required = false) String specialite,
             @RequestParam(required = false) Integer annee) {
         Pageable pageable = PageRequest.of(0, 50);
-        
+
         return service.getAvocatFiltre(region, specialite, annee, pageable);
     }
-    
+
     @PostMapping("/createAvocat")
     public ResponseEntity<String> createAvocat(@RequestBody AvocatDTO avocat) {
-        
+
         return ResponseEntity.ok(service.registerAvocat(avocat));
     }
-    
+
 }
