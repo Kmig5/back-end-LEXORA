@@ -36,4 +36,6 @@ public class Avocat extends User {
     private int honoraire;
 
     private int annee;
+    
+    private String description;
 }

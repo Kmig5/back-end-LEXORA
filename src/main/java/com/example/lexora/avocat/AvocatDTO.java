@@ -28,4 +28,5 @@ public class AvocatDTO {
     private List<String> specialite;
     private int honoraire;
     private int annee;
+    private String description;
 }
