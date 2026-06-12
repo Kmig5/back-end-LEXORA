@@ -2,6 +2,7 @@ package com.example.lexora.client;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,27 @@ class ClientService {
         repo.save(client);
 
         return "Bienvenue " + clientNew.getPrenom();
+    }
+
+    public String modifier(ClientDTO clientNew) {
+        Client client = new Client();
+
+        Optional<Client> clientBD = repo.findById(clientNew.getId());
+        
+
+        if (clientBD.isPresent()) {
+            client = clientBD.get();
+            
+            client.setId(clientNew.getId());
+            client.setEmail(clientNew.getEmail());
+            client.setNom(clientNew.getNom());
+            client.setPrenom(clientNew.getPrenom());
+            client.setRegion(clientNew.getRegion());
+            client.setVille(clientNew.getVille());
+        }
+        
+        repo.save(client);
+
+        return "Modification ajouté avec succès";
     }
 }
