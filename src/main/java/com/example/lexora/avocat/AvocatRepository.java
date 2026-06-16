@@ -39,17 +39,18 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
     );
 
     @Query(value = """
-               SELECT DISTINCT u.* FROM users u 
-               LEFT JOIN avocat_specialites s ON u.id = s.avocat_id 
-               WHERE LOWER(u.type_utilisateur) = 'avocat' 
+               SELECT DISTINCT u FROM User u 
+               LEFT JOIN FETCH u.specialites s 
+               WHERE LOWER(u.typeUtilisateur) = 'avocat' 
                AND (
                   LOWER(u.nom) LIKE LOWER(CONCAT('%', :q, '%')) 
                   OR LOWER(u.prenom) LIKE LOWER(CONCAT('%', :q, '%')) 
                   OR LOWER(u.region) LIKE LOWER(CONCAT('%', :q, '%'))
                   OR LOWER(u.ville) LIKE LOWER(CONCAT('%', :q, '%'))
-                  OR LOWER(s.specialite) LIKE LOWER(CONCAT('%', :q, '%'))
+                  OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
+                  OR LOWER(u.description) LIKE LOWER(CONCAT('%', :q, '%'))
                )
-               """, nativeQuery = true)
+               """) 
     List<Avocat> rechercheDebounce(@Param("q") String q);
 
 }
