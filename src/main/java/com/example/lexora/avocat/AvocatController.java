@@ -33,7 +33,7 @@ public class AvocatController {
     
     @GetMapping("recherche")
     public List<Avocat> getAvocatSearch(
-            @RequestParam(required = false) String q
+            @RequestParam("q") String q
     ) {
         return service.getAvocatSearch(q);
     }

@@ -42,7 +42,7 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
                SELECT * FROM avocat 
                WHERE LOWER(nom) LIKE LOWER(CONCAT('%', :q, '%')) 
                   OR LOWER(prenom) LIKE LOWER(CONCAT('%', :q, '%')) 
-                  OR LOWER(specialite::text) LIKE LOWER(CONCAT('%', :q, '%')
+                  OR LOWER(specialite::text) LIKE LOWER(CONCAT('%', :q, '%'))
                   OR LOWER(region) LIKE LOWER(CONCAT('%', :q, ''))
                   OR LOWER(ville) LIKE LOWER(CONCAT('%', :q, ''))
                """, nativeQuery = true)
