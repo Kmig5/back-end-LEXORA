@@ -26,7 +26,7 @@ public class ClientController {
         return ResponseEntity.ok(service.registerClient(userRegister));
     }
     
-    @PutMapping("/createClient")
+    @PutMapping("/modifierClient")
     public ResponseEntity<String> modifier(@RequestBody ClientDTO userRegister) {
 
         return ResponseEntity.ok(service.modifier(userRegister));

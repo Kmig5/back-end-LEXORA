@@ -58,4 +58,8 @@ public class AvocatService {
 
         return "Bienvenue " + avocatDto.getPrenom();
     }
+
+    public List<Avocat> getAvocatSearch(String q) {
+        return repo.rechercheDebounce(q);
+    }
 }

@@ -30,6 +30,13 @@ public class AvocatController {
     public List<Avocat> getAvocat() {
         return service.getAvocat();
     }
+    
+    @GetMapping("recherche")
+    public List<Avocat> getAvocatSearch(
+            @RequestParam(required = false) String q
+    ) {
+        return service.getAvocatSearch(q);
+    }
 
     @GetMapping("/filtreAvocat")
     public Page<Avocat> getAvocatFiltre(
