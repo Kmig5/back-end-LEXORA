@@ -30,7 +30,7 @@ public class PublicationService {
         return liste;
     }
     
-    public List<Publication> lirePublicationById(User user) {
-        return repo.findByUser(user);
+    public List<Publication> lirePublicationById(UUID id) {
+        return repo.findByUser_Id(id);
     }
 }

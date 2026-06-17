@@ -54,8 +54,8 @@ public class PublicationController {
     
     @GetMapping("/readId")
     public List<Publication> readPublicationByID(
-            @RequestParam User user
+            @RequestParam UUID id
     ) {
-        return service.lirePublicationById(user);
+        return service.lirePublicationById(id);
     }
 }
