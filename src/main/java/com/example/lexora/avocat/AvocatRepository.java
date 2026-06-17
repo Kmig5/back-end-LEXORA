@@ -1,5 +1,6 @@
 package com.example.lexora.avocat;
 
+import com.example.lexora.user.User;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
 
     @Query(value = """
                SELECT DISTINCT u FROM User u 
-               LEFT JOIN FETCH u.specialites s 
+               LEFT JOIN u.specialite s 
                WHERE LOWER(u.typeUtilisateur) = 'avocat' 
                AND (
                   LOWER(u.nom) LIKE LOWER(CONCAT('%', :q, '%')) 
@@ -50,7 +51,7 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
                   OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
                   OR LOWER(u.description) LIKE LOWER(CONCAT('%', :q, '%'))
                )
-               """) 
+               """)
     List<Avocat> rechercheDebounce(@Param("q") String q);
 
 }
