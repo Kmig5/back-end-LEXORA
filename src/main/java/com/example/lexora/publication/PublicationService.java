@@ -1,6 +1,7 @@
 
 package com.example.lexora.publication;
 
+import com.example.lexora.user.User;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class PublicationService {
         return liste;
     }
     
-    public List<Publication> lirePublicationById(UUID id) {
-        return repo.findByUserId(id);
+    public List<Publication> lirePublicationById(User user) {
+        return repo.findByUser(user);
     }
 }

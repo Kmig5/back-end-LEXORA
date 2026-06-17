@@ -2,6 +2,7 @@ package com.example.lexora.publication;
 
 import com.example.lexora.client.Client;
 import com.example.lexora.client.ClientRepository;
+import com.example.lexora.user.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,10 +34,10 @@ public class PublicationController {
     public String creation(@RequestBody PublicationDTO pub) {
         Publication newPub = new Publication();
 
-        Optional<Client> user = repoClient.findById(pub.getUserId());
+        Optional<Client> user = repoClient.findById(pub.getUser());
 
         if (user.isPresent()) {
-            newPub.setUserId(user.get());
+            newPub.setUser(user.get());
         }
 
         newPub.setDomaine(pub.getDomaine());
@@ -53,8 +54,8 @@ public class PublicationController {
     
     @GetMapping("/readId")
     public List<Publication> readPublicationByID(
-            @RequestParam UUID id
+            @RequestParam User user
     ) {
-        return service.lirePublicationById(id);
+        return service.lirePublicationById(user);
     }
 }

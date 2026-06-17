@@ -44,7 +44,7 @@ public class Publication {
     @ManyToOne
     @JoinColumn(name = "id_user")
     @JsonIgnore
-    private User userId;
+    private User user;
     
     @CreatedDate
     @Column(nullable = false, updatable = false)
