@@ -23,5 +23,7 @@ class PublicationDTO {
     private String contenu;
 
     private UUID user;
+    
+    private String typePublication;
 
 }

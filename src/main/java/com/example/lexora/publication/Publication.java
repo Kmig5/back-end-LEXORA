@@ -38,6 +38,8 @@ public class Publication {
     @Column(columnDefinition = "TEXT")
     private String contenu;
     
+    private String typePublication;
+    
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
