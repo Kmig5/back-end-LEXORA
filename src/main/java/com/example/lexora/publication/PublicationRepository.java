@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PublicationRepository extends JpaRepository<Publication, Long>{
-    public List<Publication> findByUserID(UUID userId);
+    public List<Publication> findByUserId(UUID userId);
 }

@@ -30,6 +30,6 @@ public class PublicationService {
     }
     
     public List<Publication> lirePublicationById(UUID id) {
-        return repo.findByUserID(id);
+        return repo.findByUserId(id);
     }
 }
