@@ -1,6 +1,7 @@
 package com.example.lexora.publication;
 
 import com.example.lexora.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +43,8 @@ public class Publication {
     
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User user;
+    @JsonIgnore
+    private User userId;
     
     @CreatedDate
     @Column(nullable = false, updatable = false)

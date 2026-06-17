@@ -5,6 +5,7 @@ import com.example.lexora.client.ClientRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class PublicationController {
         Optional<Client> user = repoClient.findById(pub.getUser());
 
         if (user.isPresent()) {
-            newPub.setUser(user.get());
+            newPub.setUserId(user.get());
         }
 
         newPub.setDomaine(pub.getDomaine());
@@ -46,8 +47,8 @@ public class PublicationController {
     }
 
     @GetMapping("/read")
-    public List<Publication> readPublication() {
-        return service.lirePublication();
+    public ResponseEntity<List<Publication>> readPublication() {
+        return ResponseEntity.ok(service.lirePublication());
     }
     
     @GetMapping("/readId")
