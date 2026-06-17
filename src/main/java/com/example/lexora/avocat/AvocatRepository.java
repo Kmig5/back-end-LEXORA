@@ -39,19 +39,18 @@ public interface AvocatRepository extends JpaRepository<Avocat, UUID> {
             Pageable pageable
     );
 
-    @Query(value = """
-               SELECT DISTINCT u FROM User u 
-               LEFT JOIN u.specialite s 
-               WHERE LOWER(u.typeUtilisateur) = 'avocat' 
-               AND (
-                  LOWER(u.nom) LIKE LOWER(CONCAT('%', :q, '%')) 
-                  OR LOWER(u.prenom) LIKE LOWER(CONCAT('%', :q, '%')) 
-                  OR LOWER(u.region) LIKE LOWER(CONCAT('%', :q, '%'))
-                  OR LOWER(u.ville) LIKE LOWER(CONCAT('%', :q, '%'))
-                  OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
-                  OR LOWER(u.description) LIKE LOWER(CONCAT('%', :q, '%'))
-               )
-               """)
+    @Query("""
+    SELECT DISTINCT a
+    FROM Avocat a
+    LEFT JOIN a.specialite s
+    WHERE
+        LOWER(a.nom) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.prenom) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.region) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.ville) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.description) LIKE LOWER(CONCAT('%', :q, '%'))
+""")
     List<Avocat> rechercheDebounce(@Param("q") String q);
 
 }

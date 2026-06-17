@@ -1,5 +1,8 @@
 package com.example.lexora.user;
 
+import com.example.lexora.publication.Publication;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,4 +47,7 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERREUR Veuillez reessayer");
     }
     
+    public List<Publication> lirePublicationById(UUID id, String email) {
+        return repo.findByIdAndEmail(id, email);
+    }
 }
