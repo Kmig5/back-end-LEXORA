@@ -33,7 +33,7 @@ public class PublicationController {
     public String creation(@RequestBody PublicationDTO pub) {
         Publication newPub = new Publication();
 
-        Optional<Client> user = repoClient.findById(pub.getUser());
+        Optional<Client> user = repoClient.findById(pub.getUserId());
 
         if (user.isPresent()) {
             newPub.setUserId(user.get());
