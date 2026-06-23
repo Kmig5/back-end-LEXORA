@@ -1,6 +1,7 @@
 package com.example.lexora.avocat;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,7 +62,8 @@ public class AvocatController {
             @RequestParam("doc2") MultipartFile doc2,
             @RequestParam("doc3") MultipartFile doc3,
             @RequestParam("description") String description,
-            @RequestParam("specialite") String specialite
+            @RequestParam("specialite") String specialite,
+            @RequestParam("idClient") UUID id
     ) {
         return ResponseEntity.ok("Le serveur dit: "+description+" "+specialite+" "+
                 doc1.getOriginalFilename());
