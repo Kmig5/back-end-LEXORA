@@ -23,7 +23,7 @@ class ClientService {
         this.encoder = encoder;
     }
 
-    public String registerClient(ClientDTO clientNew) {
+    public Client registerClient(ClientDTO clientNew) {
         List<String> couleurs = List.of("blue", "red", "gray", "yellow", "orange", "violet");
         Random random = new Random();
         int choice = random.nextInt(couleurs.size());
@@ -44,7 +44,12 @@ class ClientService {
 
         repo.save(client);
 
-        return "Bienvenue " + clientNew.getPrenom();
+        return retournerUserInscrit(client);
+    }
+    
+    private Client retournerUserInscrit(Client clt){
+        clt.setPassword(null);
+        return clt;
     }
 
     public String modifier(ClientDTO clientNew) {

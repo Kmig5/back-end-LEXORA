@@ -21,7 +21,7 @@ public class ClientController {
     private ClientService service;
 
     @PostMapping("/createClient")
-    public ResponseEntity<String> register(@RequestBody ClientDTO userRegister) {
+    public ResponseEntity<Client> register(@RequestBody ClientDTO userRegister) {
 
         return ResponseEntity.ok(service.registerClient(userRegister));
     }
