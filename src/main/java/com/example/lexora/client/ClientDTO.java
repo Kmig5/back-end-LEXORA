@@ -25,5 +25,7 @@ class ClientDTO {
     private String password;
     private String region;
     private String ville;
+    private String numeroTel;
+    
     private Instant createdAt;
 }

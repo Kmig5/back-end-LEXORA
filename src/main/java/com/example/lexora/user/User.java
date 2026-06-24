@@ -73,6 +73,9 @@ public abstract class User {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
     
+    @Column(name = "type_utilisateur", insertable = false, updatable = false)
+    private String typeUtilisateur;
+    
     @OneToMany
     private List<Publication> posts;
     

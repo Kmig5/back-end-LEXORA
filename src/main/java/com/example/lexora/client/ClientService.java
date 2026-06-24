@@ -40,6 +40,7 @@ class ClientService {
         client.setColor(couleurs.get(choice));
         client.setRegion(clientNew.getRegion());
         client.setVille(clientNew.getVille());
+        client.setNumeroTel(clientNew.getNumeroTel());
 
         repo.save(client);
 
@@ -50,19 +51,19 @@ class ClientService {
         Client client = new Client();
 
         Optional<Client> clientBD = repo.findById(clientNew.getId());
-        
 
         if (clientBD.isPresent()) {
             client = clientBD.get();
-            
+
             client.setId(clientNew.getId());
             client.setEmail(clientNew.getEmail());
             client.setNom(clientNew.getNom());
             client.setPrenom(clientNew.getPrenom());
             client.setRegion(clientNew.getRegion());
             client.setVille(clientNew.getVille());
+            client.setNumeroTel(clientNew.getNumeroTel());
         }
-        
+
         repo.save(client);
 
         return "Modification ajouté avec succès";

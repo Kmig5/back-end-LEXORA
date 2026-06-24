@@ -41,6 +41,9 @@ public class UserService {
             user.setVille(userBD.getVille());
             user.setRegion(userBD.getRegion());
             user.setColor(userBD.getColor());
+            user.setCreatedAt(userBD.getCreatedAt());
+            user.setNumeroTel(userBD.getNumeroTel());
+            user.setTypeUtilisateur(userBD.getTypeUtilisateur());
             return ResponseEntity.ok(user);
         }
         

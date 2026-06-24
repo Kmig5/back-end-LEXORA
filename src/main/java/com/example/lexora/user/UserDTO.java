@@ -25,6 +25,8 @@ public class UserDTO {
     private String region;
     private String ville;
     private String color;
+    private String numeroTel;
+    private String typeUtilisateur;
 
     private Instant createdAt;
 }
