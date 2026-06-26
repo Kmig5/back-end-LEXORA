@@ -1,9 +1,7 @@
 package com.example.lexora.avocat;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Random;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,10 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AvocatService {
 
-    @Autowired
-    private AvocatRepository repo;
+    private final AvocatRepository repo;
 
-    BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
 
     public AvocatService(AvocatRepository repo, BCryptPasswordEncoder encoder) {
         this.repo = repo;
@@ -52,7 +49,6 @@ public class AvocatService {
         avocat.setRegion(avocatDto.getRegion());
         avocat.setVille(avocatDto.getVille());
         avocat.setSpecialite(avocatDto.getSpecialite());
-        avocat.setCreatedAt(Instant.now());
 
         repo.save(avocat);
 

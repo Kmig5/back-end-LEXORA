@@ -10,6 +10,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  *
@@ -32,6 +34,7 @@ import org.springframework.data.annotation.CreatedDate;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type_utilisateur")
 @DiscriminatorValue("USER")
@@ -78,7 +81,8 @@ public abstract class User {
     @Column(name = "type_utilisateur", insertable = false, updatable = false)
     private String typeUtilisateur;
     
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Publication> posts;
     
 }
