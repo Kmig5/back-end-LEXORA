@@ -33,8 +33,9 @@ public class ConfigSecurity {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/error").permitAll()
+                .requestMatchers("/lexora/**").permitAll()
+                .anyRequest().denyAll()
                 );
 
         return http.build();
