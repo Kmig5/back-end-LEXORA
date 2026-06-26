@@ -14,17 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpStatusCodeException;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/lexora/ia")
 @CrossOrigin(origins = "*")
 public class IAController {
-
-    // ⚠️ METTEZ ICI VOTRE VRAI SECRET DIRECT LINE COPIÉ DEPUIS COPILOT STUDIO
-    private final String DIRECT_LINE_SECRET = "CbJR50yETsZQ0iaZz38s4bQCjm9fU2DLnryVk2qjnSZlzpDK12W3JQQJ99CEACZoyfiAArohAAABAZBS1tjv.6J1f4oTdynx6i5GUV9SQoLeX6ih8Nw86tmAl3x2UV21Q4oJppGnLJQQJ99CEACZoyfiAArohAAABAZBS3jB6";
-    private final String BASE_URL = "https://b84dd4aeb5cae0699c8131a4eafc08.11.environment.api.powerplatform.com/copilotstudio/dataverse-backed/authenticated/bots/cr29c_LEXORAIA/conversations?api-version=2022-03-01-preview";
-    private final RestTemplate restTemplate = new RestTemplate();
 
     @PostMapping("/question")
     public ResponseEntity<String> repondre(@RequestParam String question) {

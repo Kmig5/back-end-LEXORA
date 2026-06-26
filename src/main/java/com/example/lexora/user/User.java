@@ -3,6 +3,7 @@ package com.example.lexora.user;
 import com.example.lexora.avocat.Avocat;
 import com.example.lexora.client.Client;
 import com.example.lexora.publication.Publication;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.Column;
@@ -61,6 +62,7 @@ public abstract class User {
     @Column(nullable = false, unique = true)
     private String email;
     
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
     
