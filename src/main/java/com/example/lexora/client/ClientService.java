@@ -1,6 +1,5 @@
 package com.example.lexora.client;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,7 +31,6 @@ class ClientService {
 
         Client client = new Client();
 
-        client.setCreatedAt(Instant.now());
         client.setEmail(clientNew.getEmail());
         client.setNom(clientNew.getNom());
         client.setPrenom(clientNew.getPrenom());
