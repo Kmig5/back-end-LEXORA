@@ -1,7 +1,5 @@
 package com.example.lexora.rendezVous;
 
-import com.example.lexora.avocat.Avocat;
-import com.example.lexora.client.Client;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +17,9 @@ import lombok.Setter;
 @Setter
 public class RendezVousDTO {
     
-    private Avocat avocat;
+    private Long avocat;
     
-    private Client client;
+    private Long client;
     
     private LocalDateTime dateTime;
     
