@@ -34,11 +34,11 @@ public class Avocat extends User {
     @Column(name = "specialite")
     private List<String> specialite = new ArrayList<>();
 
-    private Integer note;
+    private Float note;
 
     private boolean isVerified;
 
-    private int honoraire;
+    private Integer honoraire;
 
     private Integer annee;
 

@@ -43,7 +43,7 @@ public class RendezVous {
     @JoinColumn(name = "client_id")
     private Client client;
     
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     
     private Integer duree;
     
@@ -54,7 +54,7 @@ public class RendezVous {
     private String commentaireAvocat;
     
     @Enumerated(EnumType.STRING)
-    private Statut statut;
+    private Statut statut = Statut.EN_ATTENTE;
     
     @Enumerated(EnumType.STRING)
     private ModeConsultation mode;
