@@ -9,14 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Miguel
  */
-
 @RestController()
 @RequestMapping("/lexora/rendez-vous")
 public class RDVController {
     
+    private RDVService service;
+    
+    public RDVController(RDVService service) {
+        this.service = service;
+    }
+    
     @PostMapping("/create-RDV")
-    public String createRDV(@RequestBody RendezVousDTO rdvdto){
-        return "RDV est arrivé dans Spring boot correctement";
+    public String createRDV(@RequestBody RendezVousDTO rdvdto) {
+        return service.creerRDV(rdvdto);
     }
     
 }

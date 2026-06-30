@@ -23,44 +23,43 @@ import org.springframework.data.annotation.CreatedDate;
  *
  * @author Miguel
  */
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class RendezVous {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "avocat_id")
     private Avocat avocat;
-    
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-    
+
     private LocalDateTime dateTime;
-    
+
     private Integer duree;
-    
+
     @Column(length = 1000)
     private String motif;
-    
+
     @Column(length = 1000)
     private String commentaireAvocat;
-    
+
     @Enumerated(EnumType.STRING)
     private Statut statut = Statut.EN_ATTENTE;
-    
+
     @Enumerated(EnumType.STRING)
     private ModeConsultation mode;
-    
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
-    
+
 }

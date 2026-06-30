@@ -22,7 +22,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *
  * @author Miguel
  */
-
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
@@ -30,25 +29,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 public class Publication {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
     private String domaine;
-    
+
     private String question;
-    
+
     @Column(columnDefinition = "TEXT")
     private String contenu;
-    
+
     private String typePublication;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_user")
     @JsonIgnore
     private User user;
-    
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Instant createdAt;

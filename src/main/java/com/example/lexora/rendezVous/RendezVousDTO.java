@@ -11,27 +11,26 @@ import lombok.Setter;
  *
  * @author Miguel
  */
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class RendezVousDTO {
-    
-    private UUID avocat;
-    
-    private UUID client;
-    
+
+    private UUID avocat_id;
+
+    private UUID client_id;
+
     private LocalDateTime dateTime;
-    
+
     private Integer duree;
-    
+
     private String motif;
-    
+
     private String commentaireAvocat;
-    
+
     private Statut statut;
-    
+
     private ModeConsultation mode;
-    
+
 }
