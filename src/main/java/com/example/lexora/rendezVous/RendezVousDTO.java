@@ -1,6 +1,7 @@
 package com.example.lexora.rendezVous;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,9 @@ import lombok.Setter;
 @Setter
 public class RendezVousDTO {
     
-    private Long avocat;
+    private UUID avocat;
     
-    private Long client;
+    private UUID client;
     
     private LocalDateTime dateTime;
     
