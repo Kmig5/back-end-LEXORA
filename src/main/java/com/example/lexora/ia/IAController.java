@@ -1,12 +1,6 @@
 package com.example.lexora.ia;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,7 +64,6 @@ public class IAController {
             return ResponseEntity.ok(IAServices.callAI(prompt));
 
         } catch (HttpStatusCodeException e) {
-            // INTERCEPTE L'ERREUR POUR LIRE LE TEXTE DU SERVEUR SANS PLANTER
             System.err.println("ERREUR HTTP MICROSOFT");
             System.err.println("Code HTTP : " + e.getStatusCode());
             System.err.println("Message renvoyé : " + question);

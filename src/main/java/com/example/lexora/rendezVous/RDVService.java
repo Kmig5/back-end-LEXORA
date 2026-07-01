@@ -4,7 +4,9 @@ import com.example.lexora.avocat.Avocat;
 import com.example.lexora.avocat.AvocatRepository;
 import com.example.lexora.client.Client;
 import com.example.lexora.client.ClientRepository;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,6 +46,11 @@ public class RDVService {
         }
 
         return "Le Rendez-Vous a été sauvegarder dans la BD";
+    }
+    
+    
+    List<RendezVous> getOwnerRDV(UUID userId) {
+        return repo.findByAvocat_Id(userId);
     }
 
 }
