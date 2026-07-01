@@ -1,5 +1,6 @@
 package com.example.lexora.rendezVous;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +29,8 @@ public class RDVController {
     }
     
     @GetMapping("/ownerRdv")
-    public String getOwnerRDV(@RequestHeader UUID userId) {
-        return " 'Vous n'avez pas encore de RDV' a dit le serveur";
+    public List<RendezVous> getOwnerRDVforAvocat(@RequestHeader UUID userId) {
+        return service.getOwnerRDV(userId);
     }
     
 }
