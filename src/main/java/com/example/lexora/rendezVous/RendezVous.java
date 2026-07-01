@@ -1,5 +1,7 @@
 package com.example.lexora.rendezVous;
 
+import com.example.lexora.rendezVous.enums.ModeConsultation;
+import com.example.lexora.rendezVous.enums.Statut;
 import com.example.lexora.avocat.Avocat;
 import com.example.lexora.client.Client;
 import jakarta.persistence.Column;

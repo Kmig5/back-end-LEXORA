@@ -1,5 +1,7 @@
 package com.example.lexora.rendezVous;
 
+import com.example.lexora.rendezVous.enums.ModeConsultation;
+import com.example.lexora.rendezVous.enums.Statut;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;

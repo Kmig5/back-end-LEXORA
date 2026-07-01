@@ -1,4 +1,4 @@
-package com.example.lexora.rendezVous;
+package com.example.lexora.rendezVous.enums;
 
 /**
  *
