@@ -1,10 +1,7 @@
 package com.example.lexora.publication;
 
-import com.example.lexora.client.Client;
 import com.example.lexora.client.ClientRepository;
-import com.example.lexora.user.User;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +46,7 @@ public class PublicationController {
     }
     
     @PutMapping("/modif")
-    public String modifier (@RequestBody Publication pub) {
+    public String modifier (@RequestBody PublicationDTO pub) {
         return service.modification(pub);
     }
 }

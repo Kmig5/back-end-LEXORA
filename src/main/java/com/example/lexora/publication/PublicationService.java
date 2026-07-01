@@ -52,8 +52,21 @@ public class PublicationService {
         return repo.findByUser_Id(id);
     }
 
-    public String modification(Publication pub) {
-        repo.save(pub);
+    public String modification(PublicationDTO pub) {
+        Publication newPub = new Publication();
+        
+        Optional<Client> user = repoClient.findById(pub.getUser());
+
+        if (user.isPresent()) {
+            newPub.setUser(user.get());
+        }
+        
+        newPub.setId(pub.getId());
+        newPub.setDomaine(pub.getDomaine());
+        newPub.setQuestion(pub.getQuestion());
+        newPub.setContenu(pub.getContenu());
+        
+        repo.save(newPub);
         return "Publication modifié avec succès";
     }
 }

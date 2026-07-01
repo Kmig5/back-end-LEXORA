@@ -15,6 +15,8 @@ import lombok.Setter;
 @Getter
 @Setter
 class PublicationDTO {
+    
+    private Long id;
 
     private String domaine;
 
