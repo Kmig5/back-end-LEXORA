@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +25,9 @@ public class IAController {
             @RequestParam String question, 
             @ModelAttribute Documents documents) throws IOException, TikaException {
         
-        StringBuilder contenu = null;
+        StringBuilder contenu = new StringBuilder();
         
-        if( Objects.nonNull(documents) ) {
+        if( documents.getDocuments() != null ) {
             for (Document doc : documents.getDocuments()) {
                 if ("document".equals(doc.getType())) {
                     contenu.append("\n");
