@@ -3,8 +3,6 @@ package com.example.lexora.ia;
 import com.example.lexora.ia.modelDocuments.Document;
 import com.example.lexora.ia.modelDocuments.Documents;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
 import org.apache.tika.exception.TikaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +26,7 @@ public class IAController {
 
         StringBuilder contenu = new StringBuilder();
 
-        if (!documents.getDocuments().isEmpty()) {
+        if (documents != null && documents.getDocuments() != null && !documents.getDocuments().isEmpty()) {
 
             int nombre = 1;
             contenu.append("""
