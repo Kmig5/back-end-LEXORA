@@ -1,5 +1,6 @@
 package com.example.lexora.ia;
 
+import com.example.lexora.ia.modelDocuments.Document;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.MutableDataSet;
@@ -9,6 +10,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.apache.tika.Tika;
+import org.apache.tika.exception.TikaException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,5 +88,10 @@ public class IAServices {
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
 
         return renderer.render(parser.parse(markdownText));
+    }
+    
+    public static String extraireTexteDocument(Document doc) throws IOException, TikaException {
+        Tika tika = new Tika();
+        return tika.parseToString(doc.getDocument().getInputStream());
     }
 }

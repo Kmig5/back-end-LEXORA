@@ -1,9 +1,15 @@
 package com.example.lexora.ia;
 
+import com.example.lexora.ia.modelDocuments.Document;
+import com.example.lexora.ia.modelDocuments.Documents;
+import java.io.IOException;
+import java.util.Objects;
+import org.apache.tika.exception.TikaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +21,24 @@ import org.springframework.web.client.HttpStatusCodeException;
 public class IAController {
 
     @PostMapping("/question")
-    public ResponseEntity<String> repondre(@RequestParam String question) {
+    public ResponseEntity<String> repondre(
+            @RequestParam String question, 
+            @RequestBody(required = false) Documents documents) throws IOException, TikaException {
+        
+        StringBuilder contenu = null;
+        
+        if( Objects.nonNull(documents) ) {
+            for (Document doc : documents.getDocuments()) {
+                if ("document".equals(doc.getType())) {
+                    contenu.append("\n");
+                    contenu.append("voici le contenu d'un document").append(IAServices.extraireTexteDocument(doc));
+                    contenu.append("\n");
+                } else if ("image".equals(doc.getType())) {
+                    // si le document est une image il faut extraire le contenu
+                }
+            }
+        }
+        
         try {
             String prompt = """
                             Instructions
@@ -57,7 +80,7 @@ public class IAController {
                             ## Suivi et cl\u00f4ture
                             - Toujours demander si l\u2019utilisateur souhaite plus de d\u00e9tails ou des exemples pratiques.
                             - Clore la conversation en rappelant que les informations fournies sont \u00e0 titre indicatif et qu\u2019il est conseill\u00e9 de consulter un professionnel pour des cas sp\u00e9cifiques.
-                            R\u00e9ponds \u00e0 cette requ\u00eate : """ + question;
+                            R\u00e9ponds \u00e0 cette requ\u00eate : """ + question + contenu;
 
             
 
