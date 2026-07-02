@@ -28,7 +28,7 @@ public class IAController {
 
         StringBuilder contenu = new StringBuilder();
 
-        if (documents.getDocuments() != null) {
+        if (!documents.getDocuments().isEmpty()) {
 
             int nombre = 1;
             contenu.append("""
@@ -38,8 +38,9 @@ public class IAController {
             """);
             for (Document doc : documents.getDocuments()) {
                 if ("document".equals(doc.getType())) {
-                    contenu.append("voici le contenu du document")
+                    contenu.append("voici le contenu du document ")
                             .append(nombre)
+                            .append("il s'agit d'un fichier envoyé par l'utilisateur")
                             .append(IAServices.extraireTexteDocument(doc))
                             .append("\n");
                     nombre++;
