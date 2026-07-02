@@ -8,6 +8,7 @@ import org.apache.tika.exception.TikaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,11 @@ import org.springframework.web.client.HttpStatusCodeException;
 @RequestMapping("/lexora/ia")
 @CrossOrigin(origins = "*")
 public class IAController {
-
+    
     @PostMapping("/question")
     public ResponseEntity<String> repondre(
             @RequestParam String question, 
-            @RequestBody(required = false) Documents documents) throws IOException, TikaException {
+            @ModelAttribute Documents documents) throws IOException, TikaException {
         
         StringBuilder contenu = null;
         
@@ -99,4 +100,5 @@ public class IAController {
                     .body("Erreur technique interne : " + e.getMessage());
         }
     }
+    
 }
