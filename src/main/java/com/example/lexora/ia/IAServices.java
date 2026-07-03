@@ -59,7 +59,7 @@ public class IAServices {
             }
 
             String reponseBruteJson = response.body().string();
-            
+
             // 🗺️ Extraction chirurgicale du contenu du texte de l'IA
             JSONObject jsonObjetPrincipal = new JSONObject(reponseBruteJson);
             JSONArray choices = jsonObjetPrincipal.getJSONArray("choices");
@@ -89,9 +89,62 @@ public class IAServices {
 
         return renderer.render(parser.parse(markdownText));
     }
-    
+
     public static String extraireTexteDocument(Document doc) throws IOException, TikaException {
         Tika tika = new Tika();
         return tika.parseToString(doc.getDocument().getInputStream());
     }
+
+    public static String callAI(String prompt, String mistral) {
+        OkHttpClient client = new OkHttpClient();
+
+        JSONObject message = new JSONObject();
+        message.put("role", "user");
+        message.put("content", prompt);
+
+        JSONArray messages = new JSONArray();
+        messages.put(message);
+
+        /*"mistral-large"*/
+        JSONObject bodyJson = new JSONObject();
+        bodyJson.put("model", mistral);
+        bodyJson.put("messages", messages);
+
+        RequestBody body = RequestBody.create(
+                bodyJson.toString(),
+                MediaType.parse("application/json")
+        );
+
+        Request request = new Request.Builder()
+                .url(URL)
+                .post(body)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                return "<p>Erreur lors de la communication avec l'API Mistral.</p>";
+            }
+
+            String reponseBruteJson = response.body().string();
+
+            // 🗺️ Extraction chirurgicale du contenu du texte de l'IA
+            JSONObject jsonObjetPrincipal = new JSONObject(reponseBruteJson);
+            JSONArray choices = jsonObjetPrincipal.getJSONArray("choices");
+            JSONObject premierChoix = choices.getJSONObject(0);
+            JSONObject messageIA = premierChoix.getJSONObject("message");
+            String texteMarkdownUnique = messageIA.getString("content");
+
+            // ✅ On convertit UNIQUEMENT la réponse textuelle en HTML
+            return markdownToHtml(texteMarkdownUnique);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "<p>Erreur de connexion au serveur.</p>";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "<p>Erreur lors de l'analyse de la réponse de l'IA.</p>";
+        }
+    }
+
 }

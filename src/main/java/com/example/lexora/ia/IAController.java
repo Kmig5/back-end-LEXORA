@@ -280,6 +280,10 @@ public class IAController {
                     .append("USER PROMPT")
                     .append(PROMPTUSER)
                     .append(PROMPTDOCUMENT);
+            
+            if (documents != null && documents.getDocuments() != null && !documents.getDocuments().isEmpty()) {
+                return ResponseEntity.ok(IAServices.callAI(prompt.toString(), "mistral-large"));
+            }
 
             return ResponseEntity.ok(IAServices.callAI(prompt.toString()));
 
