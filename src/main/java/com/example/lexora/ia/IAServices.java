@@ -123,6 +123,13 @@ public class IAServices {
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
+                System.err.println("///////////MISTRAL//////////////");
+                System.err.println(response.body());
+                System.err.println("///////////MISTRAL//////////////");
+                System.err.println(response.code());
+                System.err.println("///////////MISTRAL//////////////");
+                System.err.println(response);
+                System.err.println("///////////MISTRAL//////////////");
                 return "<p>Erreur lors de la communication avec l'API Mistral.</p>";
             }
 
