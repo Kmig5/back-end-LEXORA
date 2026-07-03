@@ -5,6 +5,7 @@ import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.data.MutableDataSet;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,8 +29,13 @@ public class IAServices {
         IAServices.API_KEY = apiKey;
     }
 
+    @SuppressWarnings("empty-statement")
     public static String callAI(String prompt) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                 .connectTimeout(30, TimeUnit.SECONDS)
+                 .readTimeout(120, TimeUnit.SECONDS)
+                 .writeTimeout(120, TimeUnit.SECONDS)
+                 .build();;
 
         JSONObject message = new JSONObject();
         message.put("role", "user");

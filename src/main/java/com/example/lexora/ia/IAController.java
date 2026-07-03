@@ -89,6 +89,8 @@ public class IAController {
             if (documents != null && documents.getDocuments() != null && !documents.getDocuments().isEmpty()) {
                 return ResponseEntity.ok(IAServices.callAI(prompt.toString(), "mistral-large-latest"));
             }
+            
+            System.out.println(prompt.length());
 
             return ResponseEntity.ok(IAServices.callAI(prompt.toString()));
 
