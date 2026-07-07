@@ -62,9 +62,11 @@ public class AvocatController {
             @RequestParam("doc2") MultipartFile doc2,
             @RequestParam("doc3") MultipartFile doc3,
             @RequestParam("description") String description,
-            @RequestParam("specialite") String specialite,
+            @RequestParam("specialite") List<String> specialite,
             @RequestParam("idClient") UUID id
     ) {
+        System.out.println(doc1.getOriginalFilename()
+                + "Le serveur dit: " + description + "\n " + specialite + " ");
         return ResponseEntity.ok("Le serveur dit: "+description+" "+specialite+" "+
                 doc1.getOriginalFilename());
     }

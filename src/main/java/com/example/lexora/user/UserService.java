@@ -1,5 +1,6 @@
 package com.example.lexora.user;
 
+import com.example.lexora.avocat.Avocat;
 import com.example.lexora.publication.Publication;
 import java.util.List;
 import java.util.UUID;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -52,5 +54,28 @@ public class UserService {
     
     public List<Publication> lirePublicationById(UUID id, String email) {
         return repo.findByIdAndEmail(id, email);
+    }
+    
+    
+    // Administrateur Only
+    
+    public List<User> getUsers() {
+        return repo.findAll();
+    }
+    
+    @Transactional
+    public Avocat modifierType(UUID id, String nouveauType) {
+        repo.changerTypeUtilisateur(id, nouveauType);
+        
+        User userConverti = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utilisateur pas trouvé"));
+        
+        if (userConverti instanceof Avocat avocat) {
+            return repo.save(avocat);
+        } else {
+            throw new RuntimeException("La conversion de type a échoué en base de données.");
+        }
+        
+        
     }
 }

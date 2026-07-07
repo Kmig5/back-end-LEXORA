@@ -85,4 +85,6 @@ public abstract class User {
     @JsonIgnore
     private List<Publication> posts;
     
+    private Boolean wantBeVerified;
+    
 }
