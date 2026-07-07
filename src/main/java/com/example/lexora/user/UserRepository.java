@@ -14,17 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Miguel
  */
-
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
+
     public User findByEmail(String email);
-    
+
     public List<Publication> findByIdAndEmail(UUID id, String email);
-    
+
     // Administrateur Only
-    
     @Transactional
     @Modifying(clearAutomatically = true) // C'est le secret pour forcer Hibernate à rafraîchir ses objets en mémoire
     @Query(value = "UPDATE users SET type_utilisateur = :nouveauType WHERE id = :userId", nativeQuery = true)
     int changerTypeUtilisateur(@Param("userId") UUID userId, @Param("nouveauType") String nouveauType);
+
+    @Query(value = "SELECT * FROM users WHERE wantBeAvocat = true", nativeQuery = true)
+    List<User> findUsersWaitingForAvocatApproval();
+
 }

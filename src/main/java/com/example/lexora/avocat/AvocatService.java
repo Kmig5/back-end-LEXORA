@@ -1,5 +1,6 @@
 package com.example.lexora.avocat;
 
+import com.example.lexora.user.User;
 import java.util.List;
 import java.util.Random;
 import org.springframework.data.domain.Page;
@@ -57,5 +58,9 @@ public class AvocatService {
 
     public List<Avocat> getAvocatSearch(String q) {
         return repo.rechercheDebounce(q);
+    }
+    
+    public void wantBeVerified(User user){
+        user.setWantBeVerified(true);
     }
 }

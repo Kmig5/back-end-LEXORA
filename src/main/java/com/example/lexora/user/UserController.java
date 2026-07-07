@@ -55,5 +55,10 @@ public class UserController {
     public Avocat modifier(@RequestBody Client client) {
         return service.modifierType(client.getId(), "AVOCAT");
     }
+    
+    @GetMapping("/clientToAvocat")
+    public List<User> clientToAvocat(){
+        return service.getWantBeAvocat();
+    }
 
 }
