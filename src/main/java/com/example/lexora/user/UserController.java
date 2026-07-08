@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -41,6 +42,18 @@ public class UserController {
             @RequestParam String email
     ) {
         return service.lirePublicationById(id, email);
+    }
+    
+    @PostMapping("/inscriptionAvocat")
+    public ResponseEntity<String> inscriptionForVerification(
+            @RequestParam("doc1") MultipartFile doc1,
+            @RequestParam("doc2") MultipartFile doc2,
+            @RequestParam("doc3") MultipartFile doc3,
+            @RequestParam("description") String description,
+            @RequestParam("specialite") List<String> specialite,
+            @RequestParam("idClient") UUID id
+    ) {        
+        return ResponseEntity.ok(service.inscriptionAvocat(id));
     }
     
     

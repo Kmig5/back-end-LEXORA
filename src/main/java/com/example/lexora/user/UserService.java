@@ -3,6 +3,7 @@ package com.example.lexora.user;
 import com.example.lexora.avocat.Avocat;
 import com.example.lexora.publication.Publication;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,18 @@ public class UserService {
 
     public List<Publication> lirePublicationById(UUID id, String email) {
         return repo.findByIdAndEmail(id, email);
+    }
+    
+    public String inscriptionAvocat(UUID id){
+        Optional<User> user = repo.findById(id);
+        if (user.isPresent()) {
+            User client = user.get();
+            client.setWantBeVerified(Boolean.TRUE);
+            repo.save(client);
+            return "Vos informations seront vérifiées et validées par notre équipe LEXORA. Merci";
+        }
+        
+        return "Uilisateur non existant";
     }
 
     // Administrateur Only

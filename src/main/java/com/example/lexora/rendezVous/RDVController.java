@@ -33,4 +33,11 @@ public class RDVController {
         return service.getOwnerRDV(userId);
     }
     
+    // ONLY ADMIN
+    
+    @GetMapping
+    public List<RendezVous> getAllRdv() {
+        return service.getAllRdv();
+    }
+    
 }

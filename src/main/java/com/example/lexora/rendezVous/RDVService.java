@@ -52,5 +52,9 @@ public class RDVService {
     List<RendezVous> getOwnerRDV(UUID userId) {
         return repo.findByAvocat_Id(userId);
     }
+    
+    List<RendezVous> getAllRdv(){
+        return repo.findAll();
+    }
 
 }
