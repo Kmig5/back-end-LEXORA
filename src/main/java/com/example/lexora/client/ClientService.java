@@ -71,4 +71,8 @@ class ClientService {
 
         return "Modification ajouté avec succès";
     }
+    
+    public List<Client> getClients(){
+        return repo.findAll();
+    }
 }

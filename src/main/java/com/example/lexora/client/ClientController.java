@@ -1,6 +1,8 @@
 package com.example.lexora.client;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,5 +32,11 @@ public class ClientController {
     public ResponseEntity<String> modifier(@RequestBody ClientDTO userRegister) {
 
         return ResponseEntity.ok(service.modifier(userRegister));
+    }
+    
+    @GetMapping()
+    public List<Client> getClients(){
+        return service.getClients();
+        return null;
     }
 }
