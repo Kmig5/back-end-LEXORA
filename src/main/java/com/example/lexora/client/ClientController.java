@@ -37,6 +37,5 @@ public class ClientController {
     @GetMapping()
     public List<Client> getClients(){
         return service.getClients();
-        return null;
     }
 }
