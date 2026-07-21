@@ -56,8 +56,8 @@ public class UserService {
     public List<Publication> lirePublicationById(UUID id, String email) {
         return repo.findByIdAndEmail(id, email);
     }
-    
-    public String inscriptionAvocat(UUID id){
+
+    public String inscriptionAvocat(UUID id) {
         Optional<User> user = repo.findById(id);
         if (user.isPresent()) {
             User client = user.get();
@@ -65,7 +65,7 @@ public class UserService {
             repo.save(client);
             return "Vos informations seront vérifiées et validées par notre équipe LEXORA. Merci";
         }
-        
+
         return "Uilisateur non existant";
     }
 
@@ -76,20 +76,26 @@ public class UserService {
 
     @Transactional
     public Avocat modifierType(UUID id, String nouveauType) {
-        repo.changerTypeUtilisateur(id, nouveauType);
 
-        User userConverti = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Utilisateur pas trouvé"));
+        User user = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
-        if (userConverti instanceof Avocat avocat) {
-            return repo.save(avocat);
-        } else {
-            throw new RuntimeException("La conversion de type a échoué en base de données.");
+        user.setTypeUtilisateur(nouveauType);
+
+        if (user.getIsVerified()== null) {
+            user.setIsVerified(false);
         }
 
+        User sauvegarde = repo.save(user);
+
+        if (sauvegarde instanceof Avocat avocat) {
+            return avocat;
+        }
+
+        throw new RuntimeException("La conversion a échoué.");
     }
 
-    public List<User> getWantBeAvocat() {        
+    public List<User> getWantBeAvocat() {
         return repo.findUsersWaitingForAvocatApproval();
     }
 }

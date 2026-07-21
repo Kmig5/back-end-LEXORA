@@ -36,8 +36,6 @@ public class Avocat extends User {
 
     private Float note;
 
-    private boolean isVerified;
-
     private Integer honoraire;
 
     private Integer annee;

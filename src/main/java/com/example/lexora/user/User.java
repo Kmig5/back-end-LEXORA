@@ -87,4 +87,6 @@ public abstract class User {
     
     private Boolean wantBeVerified;
     
+    private Boolean isVerified;
+    
 }
