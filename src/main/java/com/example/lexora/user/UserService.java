@@ -83,6 +83,7 @@ public class UserService {
 
         user.setTypeUtilisateur(nouveauType);
         user.setIsVerified(true);
+        user.setWantBeVerified(Boolean.FALSE);
 
         return repo.save(user);
 
@@ -94,7 +95,7 @@ public class UserService {
 
     // Service pour les Avocats
     public List<User> getAvocats() {
-        return repo.findAll();
+        return repo.getAvocat();
     }
 
     public List<User> getAvocatSearch(String q) {
