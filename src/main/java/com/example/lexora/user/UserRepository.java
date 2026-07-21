@@ -48,7 +48,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("""
            SELECT DISTINCT a
-           FROM users a
+           FROM User a
            WHERE a.typeUtilisateur = 'AVOCAT'
            """)
     List<User> getAvocat(); // méthode pour récupérer tous les avocats en BD
