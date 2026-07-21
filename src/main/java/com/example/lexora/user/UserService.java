@@ -112,6 +112,7 @@ public class UserService {
 
         User user = new User();
 
+        user.setTypeUtilisateur("CLIENT");
         user.setEmail(clientNew.getEmail());
         user.setNom(clientNew.getNom());
         user.setPrenom(clientNew.getPrenom());
