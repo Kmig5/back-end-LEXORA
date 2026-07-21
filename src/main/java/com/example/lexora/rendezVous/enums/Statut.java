@@ -8,7 +8,6 @@ public enum Statut {
     EN_ATTENTE,
     REFUSE,
     ACCEPTE,
-    ANNULE_CLIENT,
-    ANNULE_AVOCAT,
+    ANNULE,
     TERMINE
 }

@@ -1,5 +1,6 @@
 package com.example.lexora.rendezVous;
 
+import com.example.lexora.rendezVous.enums.Statut;
 import com.example.lexora.user.User;
 import com.example.lexora.user.UserRepository;
 import java.util.HashMap;
@@ -61,9 +62,9 @@ public class RDVService {
         Map<String, Long> liste = new HashMap<>();
         
         liste.put("nbreRDV", repo.count());
-        liste.put("nbreRDVAnnule", repo.countByStatut("ANNULE"));
-        liste.put("nbreRDVAccepte", repo.countByStatut("ACCEPTE"));
-        liste.put("nbreRDVRefuse", repo.countByStatut("REFUSE"));
+        liste.put("nbreRDVAnnule", repo.countByStatut(Statut.ANNULE.toString()));
+        liste.put("nbreRDVAccepte", repo.countByStatut(Statut.ACCEPTE.toString()));
+        liste.put("nbreRDVRefuse", repo.countByStatut(Statut.REFUSE.toString()));
         
         return liste;
     }
