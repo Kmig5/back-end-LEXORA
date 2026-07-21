@@ -1,6 +1,8 @@
-package com.example.lexora.user;
+package com.example.lexora.user.Dto;
 
+import com.example.lexora.publication.Publication;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,17 +17,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDTO {
+public class ClientDTO {
 
     private UUID id;
     private String nom;
     private String prenom;
+    private String numeroTel;
     private String email;
-    private String password;
+    private String color;
     private String region;
     private String ville;
-    private String color;
-    private String numeroTel;
-    private String typeUtilisateur;
     private Instant createdAt;
+    private String typeUtilisateur;
+    private List<Publication> posts;
+    private Boolean wantBeVerified;
+    private Boolean isVerified;
+
 }

@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.ok(service.registerClient(userRegister));
     }
 
-    @PutMapping("/modifierClient")
+    @PutMapping("/modifierUser")
     public ResponseEntity<String> modifier(@RequestBody UserDTO userRegister) {
 
         return ResponseEntity.ok(service.modifier(userRegister));
@@ -62,19 +62,19 @@ public class UserController {
     }
 
     // Contrôleur pour les avocats
-    @GetMapping
+    @GetMapping("/avocat")
     public List<User> getAvocats() {
         return service.getAvocats();
     }
 
-    @GetMapping("recherche")
+    @GetMapping("/avocat/recherche")
     public List<User> getAvocatSearch(
             @RequestParam("q") String q
     ) {
         return service.getAvocatSearch(q);
     }
 
-    @PostMapping("/inscriptionAvocat")
+    @PostMapping("/avocat/inscriptionAvocat")
     public ResponseEntity<String> inscriptionForVerification(
             @RequestParam("doc1") MultipartFile doc1,
             @RequestParam("doc2") MultipartFile doc2,

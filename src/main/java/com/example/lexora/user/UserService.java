@@ -1,6 +1,7 @@
 package com.example.lexora.user;
 
 import com.example.lexora.publication.Publication;
+import com.example.lexora.user.Dto.ClientDTO;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class UserService {
         }
 
         if (encoder.matches(passw, userBD.getPassword())) {
-            UserDTO user = new UserDTO();
+            ClientDTO user = new ClientDTO();
             user.setId(userBD.getId());
             user.setEmail(userBD.getEmail());
             user.setNom(userBD.getNom());
