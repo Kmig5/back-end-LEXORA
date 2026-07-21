@@ -62,7 +62,7 @@ public class User {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    @Column(name = "type_utilisateur", insertable = false, updatable = false)
+    @Column(name = "type_utilisateur")
     private String typeUtilisateur;
 
     @OneToMany(mappedBy = "user")
