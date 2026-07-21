@@ -33,15 +33,16 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     // Repository pour les Avocat
     @Query("""
     SELECT DISTINCT a
-    FROM user a
+    FROM User a
     LEFT JOIN a.specialite s
-    WHERE
+    WHERE a.typeUtilisateur = 'AVOCAT'
+    AND (
         LOWER(a.nom) LIKE LOWER(CONCAT('%', :q, '%'))
         OR LOWER(a.prenom) LIKE LOWER(CONCAT('%', :q, '%'))
         OR LOWER(a.region) LIKE LOWER(CONCAT('%', :q, '%'))
         OR LOWER(a.ville) LIKE LOWER(CONCAT('%', :q, '%'))
         OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
-        OR LOWER(a.description) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.description) LIKE LOWER(CONCAT('%', :q, '%')) )
 """)
     List<User> rechercheDebounce(@Param("q") String q); // méthode pour faire des recherches sur les avocats
 
