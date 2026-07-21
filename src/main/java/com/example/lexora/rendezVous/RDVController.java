@@ -41,7 +41,7 @@ public class RDVController {
         return service.getAllRdv();
     }
     
-    @GetMapping("KPIRdv")
+    @GetMapping("/KPIRdv")
     public Map<String, Long> getKPIRdv() {
         return service.getKPIRdv();
     }
