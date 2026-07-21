@@ -82,16 +82,10 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
         user.setTypeUtilisateur(nouveauType);
+        user.setIsVerified(true);
 
-        if (user.getIsVerified() == null) {
-            user.setIsVerified(false);
-        }
+        return repo.save(user);
 
-        repo.save(user);
-
-        repo.flush();
-
-        throw new RuntimeException("La conversion a échoué.");
     }
 
     public List<User> getWantBeAvocat() {
