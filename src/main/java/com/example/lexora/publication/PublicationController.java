@@ -1,6 +1,5 @@
 package com.example.lexora.publication;
 
-import com.example.lexora.client.ClientRepository;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class PublicationController {
 
     private PublicationService service;
-    private ClientRepository repoClient;
 
-    public PublicationController(PublicationService service, ClientRepository repoClient) {
+    public PublicationController(PublicationService service) {
         this.service = service;
-        this.repoClient = repoClient;
     }
 
     @PostMapping("/create")
-    public String creation(@RequestBody PublicationDTO pub) {
+    public String creationPublication(@RequestBody PublicationDTO pub) {
         return service.creerPublication(pub);
     }
 

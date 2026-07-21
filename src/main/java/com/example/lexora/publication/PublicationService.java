@@ -1,8 +1,7 @@
 package com.example.lexora.publication;
 
-import com.example.lexora.client.Client;
-import com.example.lexora.client.ClientRepository;
 import com.example.lexora.user.User;
+import com.example.lexora.user.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,9 +15,9 @@ import org.springframework.stereotype.Service;
 public class PublicationService {
 
     private PublicationRepository repo;
-    private ClientRepository repoClient;
+    private UserRepository repoClient;
 
-    public PublicationService(PublicationRepository repo, ClientRepository repoClient) {
+    public PublicationService(PublicationRepository repo, UserRepository repoClient) {
         this.repo = repo;
         this.repoClient = repoClient;
     }
@@ -28,7 +27,7 @@ public class PublicationService {
     public String creerPublication(PublicationDTO pub) {
         Publication newPub = new Publication();
 
-        Optional<Client> user = repoClient.findById(pub.getUser());
+        Optional<User> user = repoClient.findById(pub.getUser());
 
         if (user.isPresent()) {
             newPub.setUser(user.get());
@@ -55,7 +54,7 @@ public class PublicationService {
     public String modification(PublicationDTO pub) {
         Publication newPub = new Publication();
         
-        Optional<Client> user = repoClient.findById(pub.getUser());
+        Optional<User> user = repoClient.findById(pub.getUser());
 
         if (user.isPresent()) {
             newPub.setUser(user.get());

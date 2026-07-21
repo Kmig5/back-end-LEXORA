@@ -30,4 +30,26 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query(value = "SELECT * FROM users WHERE want_be_verified = true", nativeQuery = true)
     List<User> findUsersWaitingForAvocatApproval();
 
+    // Repository pour les Avocat
+    @Query("""
+    SELECT DISTINCT a
+    FROM users a
+    LEFT JOIN a.specialite s
+    WHERE
+        LOWER(a.nom) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.prenom) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.region) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.ville) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
+        OR LOWER(a.description) LIKE LOWER(CONCAT('%', :q, '%'))
+""")
+    List<User> rechercheDebounce(@Param("q") String q); // méthode pour faire des recherches sur les avocats
+
+    @Query("""
+           SELECT DISTINCT a
+           FROM users a
+           WHERE a.typeUtilisateur = 'AVOCAT'
+           """)
+    List<User> getAvocat(); // méthode pour récupérer tous les avocats en BD
+
 }

@@ -1,9 +1,9 @@
 package com.example.lexora.user;
 
-import com.example.lexora.avocat.Avocat;
 import com.example.lexora.publication.Publication;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,29 +75,85 @@ public class UserService {
     }
 
     @Transactional
-    public Avocat modifierType(UUID id, String nouveauType) {
+    public User modifierType(UUID id, String nouveauType) {
 
         User user = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
         user.setTypeUtilisateur(nouveauType);
 
-        if (user.getIsVerified()== null) {
+        if (user.getIsVerified() == null) {
             user.setIsVerified(false);
         }
 
-        User sauvegarde = repo.save(user);
-        
-        repo.flush();
+        repo.save(user);
 
-        if (sauvegarde instanceof Avocat avocat) {
-            return avocat;
-        }
+        repo.flush();
 
         throw new RuntimeException("La conversion a échoué.");
     }
 
     public List<User> getWantBeAvocat() {
         return repo.findUsersWaitingForAvocatApproval();
+    }
+
+    // Service pour les Avocats
+    public List<User> getAvocats() {
+        return repo.findAll();
+    }
+
+    public List<User> getAvocatSearch(String q) {
+        return repo.rechercheDebounce(q);
+    }
+
+    // Service pour les users clients de base
+    public User registerClient(UserDTO clientNew) {
+        List<String> couleurs = List.of("blue", "red", "gray", "yellow", "orange", "violet");
+        Random random = new Random();
+        int choice = random.nextInt(couleurs.size());
+
+        String passwHash = encoder.encode(clientNew.getPassword());
+
+        User user = new User();
+
+        user.setEmail(clientNew.getEmail());
+        user.setNom(clientNew.getNom());
+        user.setPrenom(clientNew.getPrenom());
+        user.setPassword(passwHash);
+        user.setColor(couleurs.get(choice));
+        user.setRegion(clientNew.getRegion());
+        user.setVille(clientNew.getVille());
+        user.setNumeroTel(clientNew.getNumeroTel());
+
+        repo.save(user);
+
+        return retournerUserInscrit(user);
+    }
+
+    private User retournerUserInscrit(User clt) {
+        clt.setPassword(null);
+        return clt;
+    }
+
+    public String modifier(UserDTO userNew) {
+        User client = new User();
+
+        Optional<User> clientBD = repo.findById(userNew.getId());
+
+        if (clientBD.isPresent()) {
+            client = clientBD.get();
+
+            client.setId(userNew.getId());
+            client.setEmail(userNew.getEmail());
+            client.setNom(userNew.getNom());
+            client.setPrenom(userNew.getPrenom());
+            client.setRegion(userNew.getRegion());
+            client.setVille(userNew.getVille());
+            client.setNumeroTel(userNew.getNumeroTel());
+        }
+
+        repo.save(client);
+
+        return "Modification ajouté avec succès";
     }
 }

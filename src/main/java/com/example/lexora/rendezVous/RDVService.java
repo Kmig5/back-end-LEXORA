@@ -1,9 +1,7 @@
 package com.example.lexora.rendezVous;
 
-import com.example.lexora.avocat.Avocat;
-import com.example.lexora.avocat.AvocatRepository;
-import com.example.lexora.client.Client;
-import com.example.lexora.client.ClientRepository;
+import com.example.lexora.user.User;
+import com.example.lexora.user.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,13 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RDVService {
 
-    private AvocatRepository repoAvocat;
-    private ClientRepository repoClient;
+    private UserRepository repoUser;
     private RDVRepository repo;
 
-    public RDVService(AvocatRepository repoAvocat, ClientRepository repoClient, RDVRepository repo) {
-        this.repoAvocat = repoAvocat;
-        this.repoClient = repoClient;
+    public RDVService(UserRepository repoUser, RDVRepository repo) {
+        this.repoUser = repoUser;
         this.repo = repo;
     }
 
@@ -30,8 +26,8 @@ public class RDVService {
 
         RendezVous rdv = new RendezVous();
 
-        Optional<Avocat> avocat = repoAvocat.findById(rdvdto.getAvocat_id());
-        Optional<Client> client = repoClient.findById(rdvdto.getClient_id());
+        Optional<User> avocat = repoUser.findById(rdvdto.getAvocat_id());
+        Optional<User> client = repoUser.findById(rdvdto.getClient_id());
 
         if (avocat.isPresent() && client.isPresent()) {
             rdv.setAvocat(avocat.get());

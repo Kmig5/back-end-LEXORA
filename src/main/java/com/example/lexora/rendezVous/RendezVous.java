@@ -2,8 +2,7 @@ package com.example.lexora.rendezVous;
 
 import com.example.lexora.rendezVous.enums.ModeConsultation;
 import com.example.lexora.rendezVous.enums.Statut;
-import com.example.lexora.avocat.Avocat;
-import com.example.lexora.client.Client;
+import com.example.lexora.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,11 +37,11 @@ public class RendezVous {
 
     @ManyToOne
     @JoinColumn(name = "avocat_id")
-    private Avocat avocat;
+    private User avocat;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private User client;
 
     private LocalDateTime dateTime;
 
