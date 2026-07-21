@@ -33,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     // Repository pour les Avocat
     @Query("""
     SELECT DISTINCT a
-    FROM users a
+    FROM user a
     LEFT JOIN a.specialite s
     WHERE
         LOWER(a.nom) LIKE LOWER(CONCAT('%', :q, '%'))
