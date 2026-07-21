@@ -2,7 +2,9 @@ package com.example.lexora.user;
 
 import com.example.lexora.publication.Publication;
 import com.example.lexora.user.Dto.ClientDTO;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -91,6 +93,16 @@ public class UserService {
 
     public List<User> getWantBeAvocat() {
         return repo.findUsersWaitingForAvocatApproval();
+    }
+    
+    public Map<String, Long> getKPIUsers() {
+        
+        Map<String,Long> liste = new HashMap<>();
+        liste.put("nbreUsers", repo.count());
+        liste.put("nbreAvocats", repo.countByType("AVOCAT"));
+        liste.put("nbreClients", repo.countByType("CLIENT"));
+        
+        return liste;
     }
 
     // Service pour les Avocats

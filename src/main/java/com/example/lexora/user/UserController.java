@@ -50,6 +50,11 @@ public class UserController {
     public List<User> getUsers() {
         return service.getUsers();
     }
+    
+    @GetMapping("/KPIUser")
+    public Map<String,Long> getKPIUsers(){
+        return service.getKPIUsers();
+    }
 
     @PutMapping("/modifierType")
     public User modifier(@RequestBody User client) {

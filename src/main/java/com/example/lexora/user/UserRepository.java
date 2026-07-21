@@ -52,5 +52,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
            WHERE a.typeUtilisateur = 'AVOCAT'
            """)
     List<User> getAvocat(); // méthode pour récupérer tous les avocats en BD
-
+    
+    @Query("""
+           SELECT COUNT(a) FROM User a
+           WHERE typeUtilisateur = :type
+           """)
+    Long countByType(@Param("type") String type); // méthode pour récupérer le nombre d'utilisateur par rapport au type
+    
 }
