@@ -87,6 +87,8 @@ public class UserService {
         }
 
         User sauvegarde = repo.save(user);
+        
+        repo.flush();
 
         if (sauvegarde instanceof Avocat avocat) {
             return avocat;
