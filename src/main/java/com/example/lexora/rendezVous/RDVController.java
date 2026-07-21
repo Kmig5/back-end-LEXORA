@@ -1,6 +1,7 @@
 package com.example.lexora.rendezVous;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,11 @@ public class RDVController {
     @GetMapping
     public List<RendezVous> getAllRdv() {
         return service.getAllRdv();
+    }
+    
+    @GetMapping("KPIRdv")
+    public Map<String, Long> getKPIRdv() {
+        return service.getKPIRdv();
     }
     
 }

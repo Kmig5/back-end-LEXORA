@@ -2,7 +2,9 @@ package com.example.lexora.rendezVous;
 
 import com.example.lexora.user.User;
 import com.example.lexora.user.UserRepository;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -49,8 +51,21 @@ public class RDVService {
         return repo.findByAvocat_Id(userId);
     }
     
+    // Partie Administrateur
+    
     List<RendezVous> getAllRdv(){
         return repo.findAll();
+    }
+    
+    Map<String,Long> getKPIRdv() {
+        Map<String, Long> liste = new HashMap<>();
+        
+        liste.put("nbreRDV", repo.count());
+        liste.put("nbreRDVAnnule", repo.countByStatut("ANNULE"));
+        liste.put("nbreRDVAccepte", repo.countByStatut("ACCEPTE"));
+        liste.put("nbreRDVRefuse", repo.countByStatut("REFUSE"));
+        
+        return liste;
     }
 
 }
