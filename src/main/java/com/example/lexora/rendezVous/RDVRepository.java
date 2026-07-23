@@ -1,5 +1,6 @@
 package com.example.lexora.rendezVous;
 
+import com.example.lexora.rendezVous.enums.Statut;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,5 @@ public interface RDVRepository extends JpaRepository<RendezVous, Long> {
            SELECT COUNT(rdv) FROM RendezVous rdv
            WHERE statut = :statut
            """)
-    Long countByStatut(@Param("statut") String statut);
+    Long countByStatut(@Param("statut") Statut statut);
 }

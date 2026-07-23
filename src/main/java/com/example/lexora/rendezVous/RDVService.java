@@ -62,9 +62,9 @@ public class RDVService {
         Map<String, Long> liste = new HashMap<>();
         
         liste.put("nbreRDV", repo.count());
-        liste.put("nbreRDVAnnule", repo.countByStatut(Statut.ANNULE.toString()));
-        liste.put("nbreRDVAccepte", repo.countByStatut(Statut.ACCEPTE.toString()));
-        liste.put("nbreRDVRefuse", repo.countByStatut(Statut.REFUSE.toString()));
+        liste.put("nbreRDVAnnule", repo.countByStatut(Statut.ANNULE));
+        liste.put("nbreRDVAccepte", repo.countByStatut(Statut.ACCEPTE));
+        liste.put("nbreRDVRefuse", repo.countByStatut(Statut.REFUSE));
         
         return liste;
     }
