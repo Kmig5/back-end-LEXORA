@@ -18,9 +18,9 @@ import org.springframework.web.client.HttpStatusCodeException;
 @RequestMapping("/lexora/ia")
 @CrossOrigin(origins = "*")
 public class IAController {
-    
-    private static final String PROMPTSYSTEM =
-            """
+
+    private static final String PROMPTSYSTEM
+            = """
             Tu es Lexora IA, assistant juridique spécialisé dans le droit camerounais.
                                         
                                         Tu aides les utilisateurs à comprendre leurs droits, obligations et procédures.
@@ -46,6 +46,7 @@ public class IAController {
     @PostMapping("/question")
     public ResponseEntity<String> repondre(
             @RequestParam String question,
+            @RequestParam String contexte,
             @ModelAttribute Documents documents) throws IOException, TikaException {
 
         StringBuilder contenu = new StringBuilder();
@@ -84,12 +85,14 @@ public class IAController {
                     .append(PROMPTSYSTEM)
                     .append("USER PROMPT")
                     .append(PROMPTUSER)
-                    .append(PROMPTDOCUMENT);
-            
+                    .append(PROMPTDOCUMENT)
+                    .append("Voici les 10 dernières conversations :")
+                    .append(contexte);
+
             if (documents != null && documents.getDocuments() != null && !documents.getDocuments().isEmpty()) {
                 return ResponseEntity.ok(IAServices.callAI(prompt.toString(), "mistral-large-latest"));
             }
-            
+
             System.out.println(prompt.length());
 
             return ResponseEntity.ok(IAServices.callAI(prompt.toString()));
