@@ -31,7 +31,11 @@ public class IAServices {
 
     @SuppressWarnings("empty-statement")
     public static String callAI(String prompt) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(40, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .build();
 
         JSONObject message = new JSONObject();
         message.put("role", "user");
@@ -99,10 +103,10 @@ public class IAServices {
 
     public static String callAI(String prompt, String mistral) {
         OkHttpClient client = new OkHttpClient.Builder()
-                 .connectTimeout(30, TimeUnit.SECONDS)
-                 .readTimeout(120, TimeUnit.SECONDS)
-                 .writeTimeout(120, TimeUnit.SECONDS)
-                 .build();
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .build();
 
         JSONObject message = new JSONObject();
         message.put("role", "user");
