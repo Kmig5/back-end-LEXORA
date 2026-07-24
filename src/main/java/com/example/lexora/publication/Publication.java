@@ -1,5 +1,6 @@
 package com.example.lexora.publication;
 
+import com.example.lexora.publication.enums.TypePost;
 import com.example.lexora.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -44,7 +45,7 @@ public class Publication {
     private String contenu;
 
     @Enumerated(EnumType.STRING)
-    private String typePublication;
+    private TypePost typePublication;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
