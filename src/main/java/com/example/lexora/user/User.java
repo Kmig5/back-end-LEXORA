@@ -91,7 +91,7 @@ public class User {
 
     private String description;
     
-    @OneToMany(mappedBy = "cabinet")
+    @OneToMany(mappedBy = "avocat")
     @JsonIgnore
     private List<Cabinet> cabinets;
 
