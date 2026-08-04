@@ -1,5 +1,6 @@
 package com.example.lexora.user;
 
+import com.example.lexora.cabinet.Cabinet;
 import com.example.lexora.publication.Publication;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CollectionTable;
@@ -89,5 +90,9 @@ public class User {
     private Integer annee;
 
     private String description;
+    
+    @OneToMany(mappedBy = "cabinet")
+    @JsonIgnore
+    private List<Cabinet> cabinets;
 
 }

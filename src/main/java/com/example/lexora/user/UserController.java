@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public ResponseEntity<User> register(@RequestBody UserDTO userRegister) {
+    public ResponseEntity<ClientDTO> register(@RequestBody UserDTO userRegister) {
 
         return ResponseEntity.ok(service.registerClient(userRegister));
     }
@@ -43,6 +43,13 @@ public class UserController {
     public ResponseEntity<String> modifier(@RequestBody UserDTO userRegister) {
 
         return ResponseEntity.ok(service.modifier(userRegister));
+    }
+    
+    @PutMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@RequestParam("actualPassword") String actualPassword,
+            @RequestParam("nouveauPassword") String nouveauPassword,
+            @RequestParam("id") UUID id) {
+        return ResponseEntity.ok(service.changePasword(actualPassword, nouveauPassword, id));
     }
 
     // Adminstrateur seulement
@@ -88,7 +95,7 @@ public class UserController {
             @RequestParam("specialite") List<String> specialite,
             @RequestParam("idClient") UUID id
     ) {
-        return ResponseEntity.ok(service.inscriptionAvocat(id));
+        return ResponseEntity.ok(service.inscriptionAvocat(id, description, specialite));
     }
 
 }

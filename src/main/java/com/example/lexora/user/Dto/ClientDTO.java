@@ -1,4 +1,4 @@
-package com.example.lexora.user.Dto;
+package com.example.lexora.user;
 
 import com.example.lexora.publication.Publication;
 import java.time.Instant;
@@ -13,10 +13,11 @@ import lombok.Setter;
  *
  * @author Miguel
  */
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClientDTO {
 
     private UUID id;
@@ -33,4 +34,20 @@ public class ClientDTO {
     private Boolean wantBeVerified;
     private Boolean isVerified;
 
+    public ClientDTO userToClient(User user) {
+        ClientDTO client = new ClientDTO();
+        
+        client.setId(user.getId());
+        client.setEmail(user.getEmail());
+        client.setNom(user.getNom());
+        client.setPrenom(user.getPrenom());
+        client.setVille(user.getVille());
+        client.setRegion(user.getRegion());
+        client.setColor(user.getColor());
+        client.setCreatedAt(user.getCreatedAt());
+        client.setNumeroTel(user.getNumeroTel());
+        client.setTypeUtilisateur(user.getTypeUtilisateur());
+        
+        return client;
+    }
 }

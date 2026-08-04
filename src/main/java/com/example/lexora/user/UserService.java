@@ -1,7 +1,6 @@
 package com.example.lexora.user;
 
 import com.example.lexora.publication.Publication;
-import com.example.lexora.user.Dto.ClientDTO;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,18 +38,8 @@ public class UserService {
         }
 
         if (encoder.matches(passw, userBD.getPassword())) {
-            ClientDTO user = new ClientDTO();
-            user.setId(userBD.getId());
-            user.setEmail(userBD.getEmail());
-            user.setNom(userBD.getNom());
-            user.setPrenom(userBD.getPrenom());
-            user.setVille(userBD.getVille());
-            user.setRegion(userBD.getRegion());
-            user.setColor(userBD.getColor());
-            user.setCreatedAt(userBD.getCreatedAt());
-            user.setNumeroTel(userBD.getNumeroTel());
-            user.setTypeUtilisateur(userBD.getTypeUtilisateur());
-            return ResponseEntity.ok(user);
+            ClientDTO client = new ClientDTO();
+            return ResponseEntity.ok(client.userToClient(userBD));
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERREUR Veuillez reessayer");
@@ -59,12 +48,23 @@ public class UserService {
     public List<Publication> lirePublicationById(UUID id, String email) {
         return repo.findByIdAndEmail(id, email);
     }
+    
+    public String changePasword(String ancien, String nouveau, UUID id) {
+        Optional<User> userBD = repo.findById(id);
+        if(userBD.isPresent() && encoder.matches(ancien, userBD.get().getPassword())) {
+            userBD.get().setPassword(nouveau);
+            return "mot de passe enregistré avec succès";
+        }
+        return "Erreur d'enregistrement";
+    }
 
-    public String inscriptionAvocat(UUID id) {
+    public String inscriptionAvocat(UUID id, String description, List<String> specialite) {
         Optional<User> user = repo.findById(id);
         if (user.isPresent()) {
             User client = user.get();
             client.setWantBeVerified(Boolean.TRUE);
+            client.setDescription(description);
+            client.setSpecialite(specialite);
             repo.save(client);
             return "Vos informations seront vérifiées et validées par notre équipe LEXORA. Merci";
         }
@@ -115,7 +115,8 @@ public class UserService {
     }
 
     // Service pour les users clients de base
-    public User registerClient(UserDTO clientNew) {
+    public ClientDTO registerClient(UserDTO clientNew) {
+        ClientDTO client = new ClientDTO();
         List<String> couleurs = List.of("blue", "red", "gray", "yellow", "orange", "violet");
         Random random = new Random();
         int choice = random.nextInt(couleurs.size());
@@ -136,13 +137,9 @@ public class UserService {
 
         repo.save(user);
 
-        return retournerUserInscrit(user);
+        return client.userToClient(user);
     }
 
-    private User retournerUserInscrit(User clt) {
-        clt.setPassword(null);
-        return clt;
-    }
 
     public String modifier(UserDTO userNew) {
         User client = new User();
