@@ -31,20 +31,31 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> findUsersWaitingForAvocatApproval();
 
     // Repository pour les Avocat
-    @Query("""
-    SELECT DISTINCT a
-    FROM User a
-    LEFT JOIN a.specialite s
-    WHERE a.typeUtilisateur = 'AVOCAT'
-    AND (
-        LOWER(a.nom) LIKE LOWER(CONCAT('%', :q, '%'))
-        OR LOWER(a.prenom) LIKE LOWER(CONCAT('%', :q, '%'))
-        OR LOWER(a.region) LIKE LOWER(CONCAT('%', :q, '%'))
-        OR LOWER(a.ville) LIKE LOWER(CONCAT('%', :q, '%'))
-        OR LOWER(s) LIKE LOWER(CONCAT('%', :q, '%'))
-        OR LOWER(a.description) LIKE LOWER(CONCAT('%', :q, '%')) )
-""")
-    List<User> rechercheDebounce(@Param("q") String q); // méthode pour faire des recherches sur les avocats
+    @Query(
+            value = """
+        SELECT DISTINCT a.*
+        FROM users a
+        WHERE a.type_utilisateur = 'AVOCAT'
+          AND (
+              LOWER(COALESCE(a.nom, ''))
+                  LIKE LOWER(CONCAT('%', :q, '%'))
+              OR LOWER(COALESCE(a.prenom, ''))
+                  LIKE LOWER(CONCAT('%', :q, '%'))
+              OR LOWER(COALESCE(a.region, ''))
+                  LIKE LOWER(CONCAT('%', :q, '%'))
+              OR LOWER(COALESCE(a.ville, ''))
+                  LIKE LOWER(CONCAT('%', :q, '%'))
+              OR LOWER(COALESCE(a.description, ''))
+                  LIKE LOWER(CONCAT('%', :q, '%'))
+              OR LOWER(COALESCE(a.specialites::text, ''))
+                  LIKE LOWER(CONCAT('%', :q, '%'))
+          )
+        """,
+            nativeQuery = true
+    )
+    List<User> rechercheDebounce(
+            @Param("q") String q
+    ); // méthode pour faire des recherches sur les avocats
 
     @Query("""
            SELECT DISTINCT a
@@ -52,11 +63,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
            WHERE a.typeUtilisateur = 'AVOCAT'
            """)
     List<User> getAvocat(); // méthode pour récupérer tous les avocats en BD
-    
+
     @Query("""
            SELECT COUNT(a) FROM User a
            WHERE typeUtilisateur = :type
            """)
     Long countByType(@Param("type") String type); // méthode pour récupérer le nombre d'utilisateur par rapport au type
-    
+
 }
