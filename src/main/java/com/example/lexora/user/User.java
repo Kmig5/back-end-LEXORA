@@ -2,26 +2,27 @@ package com.example.lexora.user;
 
 import com.example.lexora.cabinet.Cabinet;
 import com.example.lexora.publication.Publication;
+import com.example.lexora.user.enums.Specialite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -75,13 +76,13 @@ public class User {
     private Boolean isVerified;
 
     // Variable spécifique aux avocats
-    @ElementCollection
-    @CollectionTable(
-            name = "avocat_specialites",
-            joinColumns = @JoinColumn(name = "avocat_id")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(
+    name = "specialites",
+    columnDefinition = "jsonb",
+    nullable = true
     )
-    @Column(name = "specialite")
-    private List<String> specialite = new ArrayList<>();
+    private Set<Specialite> specialites = new HashSet<>();
 
     private Float note;
 

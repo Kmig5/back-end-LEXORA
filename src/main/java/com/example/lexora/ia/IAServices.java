@@ -66,14 +66,14 @@ public class IAServices {
 
             String reponseBruteJson = response.body().string();
 
-            // 🗺️ Extraction chirurgicale du contenu du texte de l'IA
+            // Extraction chirurgicale du contenu du texte de l'IA
             JSONObject jsonObjetPrincipal = new JSONObject(reponseBruteJson);
             JSONArray choices = jsonObjetPrincipal.getJSONArray("choices");
             JSONObject premierChoix = choices.getJSONObject(0);
             JSONObject messageIA = premierChoix.getJSONObject("message");
             String texteMarkdownUnique = messageIA.getString("content");
 
-            // ✅ On convertit UNIQUEMENT la réponse textuelle en HTML
+            // On convertit UNIQUEMENT la réponse textuelle en HTML
             return markdownToHtml(texteMarkdownUnique);
 
         } catch (IOException e) {

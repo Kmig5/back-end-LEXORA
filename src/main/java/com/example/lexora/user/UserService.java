@@ -1,11 +1,13 @@
 package com.example.lexora.user;
 
 import com.example.lexora.publication.Publication;
+import com.example.lexora.user.enums.Specialite;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,13 +60,13 @@ public class UserService {
         return "Erreur d'enregistrement";
     }
 
-    public String inscriptionAvocat(UUID id, String description, List<String> specialite) {
+    public String inscriptionAvocat(UUID id, String description, Set<Specialite> specialite) {
         Optional<User> user = repo.findById(id);
         if (user.isPresent()) {
             User client = user.get();
             client.setWantBeVerified(Boolean.TRUE);
             client.setDescription(description);
-            client.setSpecialite(specialite);
+            client.setSpecialites(specialite);
             repo.save(client);
             return "Vos informations seront vérifiées et validées par notre équipe LEXORA. Merci";
         }

@@ -1,7 +1,9 @@
 package com.example.lexora.user;
 
+import com.example.lexora.user.enums.Specialite;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,7 +94,7 @@ public class UserController {
             @RequestParam("doc2") MultipartFile doc2,
             @RequestParam("doc3") MultipartFile doc3,
             @RequestParam("description") String description,
-            @RequestParam("specialite") List<String> specialite,
+            @RequestParam("specialite") Set<Specialite> specialite,
             @RequestParam("idClient") UUID id
     ) {
         return ResponseEntity.ok(service.inscriptionAvocat(id, description, specialite));
