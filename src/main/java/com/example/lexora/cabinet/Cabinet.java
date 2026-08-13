@@ -18,7 +18,6 @@ import org.locationtech.jts.geom.Point;
  *
  * @author Miguel
  */
-
 @Entity
 @Getter
 @Setter
@@ -29,17 +28,17 @@ public class Cabinet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String nom;
-    
+
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "avocat_id")
     private User avocat;
-    
+
     @Column(columnDefinition = "geometry(Point,4326)")
     private Point localisation;
-    
+
     private String adresse;
 }
