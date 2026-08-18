@@ -100,4 +100,9 @@ public class UserController {
         return ResponseEntity.ok(service.inscriptionAvocat(id, description, specialite));
     }
 
+    
+    @GetMapping("/generation")
+    public ResponseEntity<String> generation(){
+        return service.genererUsers();
+    }
 }
