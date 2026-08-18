@@ -7,108 +7,238 @@ import org.apache.tika.exception.TikaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @RestController
 @RequestMapping("/lexora/ia")
 @CrossOrigin(origins = "*")
 public class IAController {
 
-    private static final String PROMPTSYSTEM
-            = """
-            Tu es Lexora IA, assistant juridique spécialisé dans le droit camerounais.
-                                        
-                                        Tu aides les utilisateurs à comprendre leurs droits, obligations et procédures.
-                                        
-                                        Règles :
-                                        - Répondre avec clarté et précision.
-                                        - Ne jamais inventer une loi, un article ou une jurisprudence.
-                                        - Signaler explicitement les incertitudes.
-                                        - Si des informations manquent, poser des questions.
-                                        - Ne jamais garantir l'issue d'une procédure.
-                                        - Lorsqu'un document est fourni, l'analyser intégralement et identifier :
-                                          * nature du document
-                                          * obligations
-                                          * droits
-                                          * délais
-                                          * montants
-                                          * risques juridiques
-                                        - Pour un contrat, fournir : résumé, parties, obligations, droits, clauses importantes, risques et conseils.
-                                        - Tu peux toi même aussi déviner qu'il s'agit bien d'un document si le texte est ressemblant à celui-ci
-                                        - À la fin de chaque réponse, proposer des précisions complémentaires.
-            """;
+    private static final int TAILLE_MAX_DOCUMENT = 100_000;
 
     @PostMapping("/question")
-    public ResponseEntity<String> repondre(
+    public ResponseEntity<LexoraResponse> repondre(
             @RequestParam String question,
-            @RequestParam String contexte,
-            @ModelAttribute Documents documents) throws IOException, TikaException {
+            @RequestParam(required = false, defaultValue = "") String contexte,
+            @RequestParam(required = false) String conversationId,
+            @ModelAttribute Documents documents)
+            throws IOException, TikaException {
 
-        StringBuilder contenu = new StringBuilder();
+        verifierQuestion(question);
 
-        if (documents != null && documents.getDocuments() != null && !documents.getDocuments().isEmpty()) {
+        String messageComplet = construireMessage(
+                question,
+                contexte,
+                documents,
+                conversationId
+        );
 
-            int nombre = 1;
-            contenu.append("""
-                ===========================
-                DOCUMENTS FOURNIS
-                ===========================
-            """);
-            for (Document doc : documents.getDocuments()) {
-                if ("document".equals(doc.getType())) {
-                    contenu.append("voici le contenu du document ")
-                            .append(nombre)
-                            .append("il s'agit d'un fichier envoyé par l'utilisateur")
-                            .append(IAServices.extraireTexteDocument(doc))
-                            .append("\n");
-                    nombre++;
-                } else if ("image".equals(doc.getType())) {
-                    // si le document est une image il faut extraire le contenu
-                }
-            }
+        LexoraResponse reponse = IAServices.callAgent(messageComplet, conversationId);
+
+        return ResponseEntity.ok(reponse);
+    }
+
+    private String construireMessage(
+            String question,
+            String contexte,
+            Documents documents,
+            String conversationId)
+            throws IOException, TikaException {
+
+        StringBuilder message = new StringBuilder();
+
+        message.append("QUESTION DE L'UTILISATEUR :\n")
+                .append(question.trim())
+                .append("\n");
+
+        if ((conversationId == null
+                || conversationId.isBlank())
+                && contexte != null
+                && !contexte.isBlank()) {
+
+            message.append("\n")
+                    .append("===========================\n")
+                    .append("CONTEXTE CONVERSATIONNEL\n")
+                    .append("===========================\n")
+                    .append(contexte.trim())
+                    .append("\n");
         }
 
-        StringBuilder PROMPTUSER = new StringBuilder();
-        StringBuilder PROMPTDOCUMENT = new StringBuilder();
-        StringBuilder prompt = new StringBuilder();
+        ajouterDocuments(message, documents);
 
-        PROMPTDOCUMENT.append(contenu);
-        PROMPTUSER.append(question);
+        return message.toString();
+    }
 
-        try {
-            prompt.append("SYSTEM PROMPT \n")
-                    .append(PROMPTSYSTEM)
-                    .append("USER PROMPT")
-                    .append(PROMPTUSER)
-                    .append(PROMPTDOCUMENT)
-                    .append("Voici les 10 dernières conversations :")
-                    .append(contexte);
+    private void ajouterDocuments(
+            StringBuilder message,
+            Documents documents)
+            throws IOException, TikaException {
 
-            if (documents != null && documents.getDocuments() != null && !documents.getDocuments().isEmpty()) {
-                return ResponseEntity.ok(IAServices.callAI(prompt.toString(), "mistral-large-latest"));
+        if (documents == null
+                || documents.getDocuments() == null
+                || documents.getDocuments().isEmpty()) {
+
+            return;
+        }
+
+        message.append("\n")
+                .append("===========================\n")
+                .append("DOCUMENTS FOURNIS\n")
+                .append("===========================\n");
+
+        int numeroDocument = 1;
+
+        for (Document document
+                : documents.getDocuments()) {
+
+            if (document == null
+                    || document.getType() == null) {
+                continue;
             }
 
-            System.out.println(prompt.length());
+            if ("document".equalsIgnoreCase(
+                    document.getType())) {
 
-            return ResponseEntity.ok(IAServices.callAI(prompt.toString()));
+                String texteExtrait
+                        = IAServices.extraireTexteDocument(
+                                document
+                        );
 
-        } catch (HttpStatusCodeException e) {
-            System.err.println("ERREUR HTTP MICROSOFT");
-            System.err.println("Code HTTP : " + e.getStatusCode());
-            System.err.println("Message renvoyé : " + question);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur d'authentification ou de clé auprès de Microsoft : " + e.getStatusCode());
-        } catch (Exception e) {
-            System.err.println("CRASH INTERNE JAVA");
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur technique interne : " + e.getMessage());
+                if (texteExtrait == null
+                        || texteExtrait.isBlank()) {
+
+                    message.append("\nDOCUMENT ")
+                            .append(numeroDocument)
+                            .append(" : aucun texte ")
+                            .append("n'a pu être extrait.\n");
+
+                    numeroDocument++;
+                    continue;
+                }
+
+                String texteLimite
+                        = limiterTailleDocument(
+                                texteExtrait
+                        );
+
+                message.append("\n")
+                        .append("---------------------------\n")
+                        .append("DOCUMENT ")
+                        .append(numeroDocument)
+                        .append("\n")
+                        .append("---------------------------\n")
+                        .append("Ce contenu provient d'un ")
+                        .append("fichier envoyé par ")
+                        .append("l'utilisateur.\n\n")
+                        .append(texteLimite)
+                        .append("\n");
+
+                numeroDocument++;
+            }
+
+            /*
+             * Le traitement OCR des images va être ajouté ici.
+             *
+             * else if ("image".equalsIgnoreCase(
+             *         document.getType())) {
+             *
+             *     String texteImage =
+             *             serviceOcr.extraireTexte(document);
+             *
+             *     message.append(texteImage);
+             * }
+             */
         }
     }
 
+    private String limiterTailleDocument(
+            String texte) {
+
+        if (texte.length() <= TAILLE_MAX_DOCUMENT) {
+            return texte;
+        }
+
+        return texte.substring(
+                0,
+                TAILLE_MAX_DOCUMENT
+        ) + "\n\n[DOCUMENT TRONQUÉ PAR LE BACKEND]";
+    }
+
+    private void verifierQuestion(
+            String question) {
+
+        if (question == null
+                || question.isBlank()) {
+
+            throw new IllegalArgumentException(
+                    "La question ne peut pas être vide."
+            );
+        }
+
+        if (question.length() > 10_000) {
+            throw new IllegalArgumentException(
+                    "La question est trop longue."
+            );
+        }
+    }
+
+    @ExceptionHandler(
+            IllegalArgumentException.class
+    )
+    public ResponseEntity<String>
+            gererRequeteInvalide(
+                    IllegalArgumentException exception) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(
+            MistralApiException.class
+    )
+    public ResponseEntity<String>
+            gererErreurMistral(
+                    MistralApiException exception) {
+
+        System.err.println(
+                "ERREUR API MISTRAL"
+        );
+
+        exception.printStackTrace();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .body(
+                        "Impossible d'obtenir une réponse "
+                        + "de l'assistant Lexora : "
+                        + exception.getMessage()
+                );
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String>
+            gererErreurInterne(
+                    Exception exception) {
+
+        System.err.println(
+                "ERREUR INTERNE LEXORA"
+        );
+
+        exception.printStackTrace();
+
+        return ResponseEntity
+                .status(
+                        HttpStatus.INTERNAL_SERVER_ERROR
+                )
+                .body(
+                        "Erreur technique interne : "
+                        + exception.getMessage()
+                );
+    }
 }
