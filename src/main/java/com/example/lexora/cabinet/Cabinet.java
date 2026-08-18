@@ -1,6 +1,7 @@
 package com.example.lexora.cabinet;
 
 import com.example.lexora.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +36,7 @@ public class Cabinet {
 
     @ManyToOne
     @JoinColumn(name = "avocat_id")
+    @JsonIgnore
     private User avocat;
 
     @Column(columnDefinition = "geometry(Point,4326)")
