@@ -66,7 +66,7 @@ public class UserService {
             User client = user.get();
             client.setWantBeVerified(Boolean.TRUE);
             client.setDescription(description);
-            client.setSpecialites(specialite);
+            client.setSpecialite(specialite);
             repo.save(client);
             return "Vos informations seront vérifiées et validées par notre équipe LEXORA. Merci";
         }

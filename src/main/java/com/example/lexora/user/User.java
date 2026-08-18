@@ -82,7 +82,7 @@ public class User {
     columnDefinition = "jsonb",
     nullable = true
     )
-    private Set<Specialite> specialites = new HashSet<>();
+    private Set<Specialite> specialite = new HashSet<>();
 
     private Float note;
 
