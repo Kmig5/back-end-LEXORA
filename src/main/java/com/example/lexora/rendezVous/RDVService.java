@@ -52,6 +52,15 @@ public class RDVService {
         return repo.findByAvocat_Id(userId);
     }
     
+    public String modifierStatut(Long id, Statut statut) {
+        Optional<RendezVous> rdv = repo.findById(id);
+        if(rdv.isPresent()) {
+            rdv.get().setStatut(statut);
+            return "Rendez-Vous "+statut.name()+" avec succès";
+        }
+        return "Le Rendez-Vous n'a pas été "+statut.name();
+    }
+    
     // Partie Administrateur
     
     List<RendezVous> getAllRdv(){
