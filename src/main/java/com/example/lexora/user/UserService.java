@@ -1,6 +1,7 @@
 package com.example.lexora.user;
 
 import com.example.lexora.publication.Publication;
+import com.example.lexora.user.Dto.AvocatDTO;
 import com.example.lexora.user.enums.Specialite;
 import java.util.HashMap;
 import java.util.List;
@@ -40,8 +41,14 @@ public class UserService {
         }
 
         if (encoder.matches(passw, userBD.getPassword())) {
-            ClientDTO client = new ClientDTO();
-            return ResponseEntity.ok(client.userToClient(userBD));
+            if("CLIENT".equals(userBD.getTypeUtilisateur())) {
+                ClientDTO client = new ClientDTO();
+                return ResponseEntity.ok(client.userToClient(userBD));
+            } else if("AVOCAT".equals(userBD.getTypeUtilisateur())) {
+                AvocatDTO avocat = new AvocatDTO();
+                return ResponseEntity.ok(avocat.userToAvocat(userBD));
+            }
+            
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERREUR Veuillez reessayer");
