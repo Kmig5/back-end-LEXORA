@@ -1,6 +1,6 @@
 package com.example.lexora.rendezVous;
 
-import com.example.lexora.rendezVous.enums.Statut;
+import com.example.lexora.rendezVous.dto.ModifierStatut;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -38,8 +38,8 @@ public class RDVController {
     }
     
     @PatchMapping("/{id}/statut")
-    public void modifierStatut(@PathVariable Long id, @RequestBody Statut statut) {
-        service.modifierStatut(id, statut);
+    public void modifierStatut(@PathVariable Long id, @RequestBody ModifierStatut statut) {
+        service.modifierStatut(id, statut.getStatut());
     }
     
     // ONLY ADMIN
