@@ -25,7 +25,12 @@ public class CabinetService {
         cabinetBD.setAdresse(cabinet.getAdresse());
         cabinetBD.setAvocat(cabinet.getAvocat());
         cabinetBD.setDescription(cabinet.getDescription());
-        cabinetBD.setLocalisation(cabinet.getLocalisation());
+        
+        double longitude = cabinet.getLocalisation().getCoordinates().get(0);
+        double latitude = cabinet.getLocalisation().getCoordinates().get(1);
+        
+        cabinetBD.setLongitude(longitude);
+        cabinetBD.setLatitude(latitude);
 
         repo.save(cabinetBD);
 

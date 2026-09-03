@@ -2,7 +2,6 @@ package com.example.lexora.cabinet;
 
 import com.example.lexora.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.locationtech.jts.geom.Point;
 
 /**
  *
@@ -39,8 +37,8 @@ public class Cabinet {
     @JsonIgnore
     private User avocat;
 
-    @Column(columnDefinition = "geometry(Point,4326)")
-    private Point localisation;
+    private double longitude;
+    private double latitude;
 
     private String adresse;
 }

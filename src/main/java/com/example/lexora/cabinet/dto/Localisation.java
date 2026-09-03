@@ -1,7 +1,6 @@
-
 package com.example.lexora.cabinet.dto;
 
-import com.example.lexora.user.User;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,20 +10,12 @@ import lombok.Setter;
  *
  * @author Miguel
  */
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CabinetDTO {
-    
-    private String nom;
+public class Localisation {
 
-    private String description;
-
-    private User avocat;
-
-    private Localisation localisation;
-
-    private String adresse;
+    private String type;
+    private List<Double> coordinates;
 }
