@@ -1,8 +1,8 @@
 package com.example.lexora.cabinet;
 
 import com.example.lexora.cabinet.dto.CabinetDTO;
+import com.example.lexora.user.User;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,7 +32,7 @@ public class CabinetService {
         return "Cabinet Crée avec succès";
     }
     
-    public List<Cabinet> getMyCabinet(UUID id) {
-        return repo.findByAvocat(id);
+    public List<Cabinet> getMyCabinet(User avocat) {
+        return repo.findByAvocat(avocat);
     }
 }

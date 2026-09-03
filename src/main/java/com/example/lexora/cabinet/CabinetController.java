@@ -1,8 +1,8 @@
 package com.example.lexora.cabinet;
 
 import com.example.lexora.cabinet.dto.CabinetDTO;
+import com.example.lexora.user.User;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,13 +23,13 @@ public class CabinetController {
         this.service = service;
     }
 
-    @PostMapping("/createCabinet")
+    @PostMapping("/create")
     public void creerCabinet(@RequestBody CabinetDTO dataCabinet) {
         service.createCabinet(dataCabinet);
     }
     
     @GetMapping("/my-cabinet")
-    public List<Cabinet> getCabinet(UUID id) {
-        return service.getMyCabinet(id);
+    public List<Cabinet> getCabinet(User avocat) {
+        return service.getMyCabinet(avocat);
     }    
 }
