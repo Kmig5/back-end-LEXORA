@@ -49,7 +49,7 @@ public class RDVService {
     
     
     List<RendezVous> getOwnerRDV(UUID userId) {
-        return repo.findByAvocat_Id(userId);
+        return repo.findByUserId(userId);
     }
     
     public RendezVous modifierStatut(Long id, Statut statut) {

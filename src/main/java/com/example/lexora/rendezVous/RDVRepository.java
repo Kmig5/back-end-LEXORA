@@ -13,8 +13,13 @@ import org.springframework.stereotype.Repository;
  * @author Miguel
  */
 @Repository
-public interface RDVRepository extends JpaRepository<RendezVous, Long> {
-    List<RendezVous> findByAvocat_Id(UUID userId);
+public interface RDVRepository extends JpaRepository<RendezVous, Long> {    
+    @Query("""
+    SELECT r FROM RendezVous r
+        WHERE r.avocat.id = :userId
+        OR r.client.id = :userId
+    """)
+    List<RendezVous> findByUserId(@Param("userId") UUID userId);
     
     @Query("""
            SELECT COUNT(rdv) FROM RendezVous rdv
