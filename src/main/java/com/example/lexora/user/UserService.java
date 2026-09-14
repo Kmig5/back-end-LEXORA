@@ -34,12 +34,12 @@ public class UserService {
 
     public ResponseEntity<?> login(String email, String passw) {
 
-        User userBD = repo.findByEmail(email);
-
-        if (userBD == null) {
+        Optional<User> user = repo.findByEmail(email);
+        User userBD = user.get();
+        
+        if(!user.isPresent())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email pas trouvé");
-        }
-
+        
         if (encoder.matches(passw, userBD.getPassword())) {
             if("CLIENT".equals(userBD.getTypeUtilisateur())) {
                 ClientDTO client = new ClientDTO();
