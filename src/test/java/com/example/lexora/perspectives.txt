@@ -1,7 +1,6 @@
 Court terme (avant v1.0)
 
-Ajouter l'authentification JWT → Endpoints protégés par rôle (CLIENT, AVOCAT, ADMIN).
-Implémenter les tests → JUnit 5 + Mockito. Commencer par UserService.
+- Ajouter l'authentification JWT → Endpoints protégés par rôle (CLIENT, AVOCAT, ADMIN).
 Pagination obligatoire → PageRequest, Page<T> Spring Data JPA.
 Standardiser les erreurs → GlobalExceptionHandler (@ControllerAdvice), ErrorResponse DTO.
 Valider les entrées → @Valid, @NotBlank, etc.

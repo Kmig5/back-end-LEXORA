@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/lexora/auth")
 public class UserAuth {
 
     private final AuthenticationManager authenticationManager;
