@@ -1,0 +1,22 @@
+Court terme (avant v1.0)
+
+Ajouter l'authentification JWT → Endpoints protégés par rôle (CLIENT, AVOCAT, ADMIN).
+Implémenter les tests → JUnit 5 + Mockito. Commencer par UserService.
+Pagination obligatoire → PageRequest, Page<T> Spring Data JPA.
+Standardiser les erreurs → GlobalExceptionHandler (@ControllerAdvice), ErrorResponse DTO.
+Valider les entrées → @Valid, @NotBlank, etc.
+Logs structurés → SLF4J + Logback, pas de show-sql en prod.
+
+Moyen terme
+
+Séparer User en UserProfile + LawyerProfile → Plus lisible et extensible.
+Migrer vers Spring Boot 4.1 GA (pas RC) et passer à Java 21 LTS.
+Database migrations → Liquibase ou Flyway (remplacer ddl-auto=update).
+Documentation API → Springdoc OpenAPI (Swagger).
+Auditing avancé → JPA @Audited pour tracer modifications clients/avocats.
+
+Long terme
+
+Monitoring production → Prometheus + Grafana (ou New Relic).
+Rate limiting → Protéger l'IA contre les abus.
+Cache distribué → Redis pour avocats populaires, publications trending.

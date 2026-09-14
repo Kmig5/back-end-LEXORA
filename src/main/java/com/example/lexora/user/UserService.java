@@ -35,20 +35,21 @@ public class UserService {
     public ResponseEntity<?> login(String email, String passw) {
 
         Optional<User> user = repo.findByEmail(email);
-        User userBD = user.get();
-        
-        if(!user.isPresent())
+
+        if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email pas trouvé");
-        
+        }
+
+        User userBD = user.get();
+
         if (encoder.matches(passw, userBD.getPassword())) {
-            if("CLIENT".equals(userBD.getTypeUtilisateur())) {
+            if ("CLIENT".equals(userBD.getTypeUtilisateur())) {
                 ClientDTO client = new ClientDTO();
                 return ResponseEntity.ok(client.userToClient(userBD));
-            } else if("AVOCAT".equals(userBD.getTypeUtilisateur())) {
+            } else if ("AVOCAT".equals(userBD.getTypeUtilisateur())) {
                 AvocatDTO avocat = new AvocatDTO();
                 return ResponseEntity.ok(avocat.userToAvocat(userBD));
             }
-            
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERREUR Veuillez reessayer");
@@ -60,8 +61,8 @@ public class UserService {
     
     public String changePasword(String ancien, String nouveau, UUID id) {
         Optional<User> userBD = repo.findById(id);
-        if(userBD.isPresent() && encoder.matches(ancien, userBD.get().getPassword())) {
-            userBD.get().setPassword(nouveau);
+        if (userBD.isPresent() && encoder.matches(ancien, userBD.get().getPassword())) {
+            userBD.get().setPassword(encoder.encode(nouveau));
             return "mot de passe enregistré avec succès";
         }
         return "Erreur d'enregistrement";

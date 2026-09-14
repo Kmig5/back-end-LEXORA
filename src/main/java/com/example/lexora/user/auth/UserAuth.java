@@ -28,8 +28,8 @@ public class UserAuth {
     private final UserService userService;
     private final UserDetailsService userDetailsService;
 
-    @PostMapping
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginData) {
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody Map<String, String> loginData) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginData.get("email"),
@@ -37,14 +37,19 @@ public class UserAuth {
                 )
         );
 
-        UserDetails user
-                = userDetailsService.loadUserByUsername(
-                        loginData.get("email")
-                );
-        
-        String token =
-        jwtService.generateToken(user);
+        UserDetails user = userDetailsService.loadUserByUsername(
+                loginData.get("email")
+        );
 
-        return ResponseEntity.ok(Map.of(token, userService.login(loginData.get("email"), loginData.get("password"))));
+        String token = jwtService.generateToken(user);
+
+        ResponseEntity<?> loginResponse = userService.login(
+                loginData.get("email"),
+                loginData.get("password")
+        );
+
+        return ResponseEntity.ok(
+                new AuthResponse(token, loginResponse.getBody())
+        );
     }
 }

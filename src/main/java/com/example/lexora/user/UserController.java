@@ -29,12 +29,6 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
-
-        return service.login(loginData.get("email"), loginData.get("password"));
-    }
-
     @PostMapping("/createUser")
     public ResponseEntity<ClientDTO> register(@RequestBody UserDTO userRegister) {
 

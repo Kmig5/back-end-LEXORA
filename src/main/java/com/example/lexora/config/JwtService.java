@@ -18,6 +18,9 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.expiration}")
+    private long expiration;
+
     public String generateToken(UserDetails user) {
 
         return Jwts.builder()
@@ -26,7 +29,7 @@ public class JwtService {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                + 86400000
+                                + expiration
                         )
                 )
                 .signWith(getKey())
