@@ -40,7 +40,7 @@ public class ConfigSecurity {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/auth", "/auth/**").permitAll()
+                        .requestMatchers("/lexora/auth", "/lexora/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/lexora/user/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/lexora/user/createUser").permitAll()
                         .requestMatchers("/lexora/**").authenticated()
