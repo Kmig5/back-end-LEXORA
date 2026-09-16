@@ -31,7 +31,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     int changerTypeUtilisateur(@Param("userId") UUID userId, @Param("nouveauType") String nouveauType);
 
     @Query(value = "SELECT * FROM users WHERE want_be_verified = true", nativeQuery = true)
-    List<User> findUsersWaitingForAvocatApproval();
+    Page<User> findUsersWaitingForAvocatApproval(Pageable pageable);
 
     // Repository pour les Avocat
     @Query(

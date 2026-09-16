@@ -5,6 +5,9 @@ import com.example.lexora.user.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -41,10 +44,9 @@ public class PublicationService {
         return "Publication créer avec succès";
     }
 
-    public List<Publication> lirePublication() {
-        List<Publication> liste = repo.findAll();
-
-        return liste;
+    public Page<Publication> lirePublication(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAll(pageable);
     }
 
     public List<Publication> lirePublicationById(UUID id) {

@@ -1,8 +1,9 @@
 package com.example.lexora.rendezVous;
 
 import com.example.lexora.rendezVous.enums.Statut;
-import java.util.List;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +20,7 @@ public interface RDVRepository extends JpaRepository<RendezVous, Long> {
         WHERE r.avocat.id = :userId
         OR r.client.id = :userId
     """)
-    List<RendezVous> findByUserId(@Param("userId") UUID userId);
+    Page<RendezVous> findByUserId(@Param("userId") UUID userId, Pageable pageable);
     
     @Query("""
            SELECT COUNT(rdv) FROM RendezVous rdv

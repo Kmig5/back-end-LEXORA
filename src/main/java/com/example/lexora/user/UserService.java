@@ -86,8 +86,9 @@ public class UserService {
     }
 
     // Administrateur Only
-    public List<User> getUsers() {
-        return repo.findAll();
+    public Page<User> getUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAll(pageable);
     }
 
     @Transactional
@@ -104,8 +105,9 @@ public class UserService {
 
     }
 
-    public List<User> getWantBeAvocat() {
-        return repo.findUsersWaitingForAvocatApproval();
+    public Page<User> getWantBeAvocat(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findUsersWaitingForAvocatApproval(pageable);
     }
     
     public Map<String, Long> getKPIUsers() {

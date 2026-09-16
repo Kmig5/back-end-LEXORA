@@ -4,10 +4,12 @@ import com.example.lexora.rendezVous.enums.Statut;
 import com.example.lexora.user.User;
 import com.example.lexora.user.UserRepository;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -48,8 +50,9 @@ public class RDVService {
     }
     
     
-    List<RendezVous> getOwnerRDV(UUID userId) {
-        return repo.findByUserId(userId);
+    Page<RendezVous> getOwnerRDV(UUID userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByUserId(userId, pageable);
     }
     
     public RendezVous modifierStatut(Long id, Statut statut) {
@@ -63,8 +66,9 @@ public class RDVService {
     
     // Partie Administrateur
     
-    List<RendezVous> getAllRdv(){
-        return repo.findAll();
+    Page<RendezVous> getAllRdv(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findAll(pageable);
     }
     
     Map<String,Long> getKPIRdv() {

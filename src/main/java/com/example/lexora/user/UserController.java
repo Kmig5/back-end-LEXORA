@@ -1,7 +1,6 @@
 package com.example.lexora.user;
 
 import com.example.lexora.user.enums.Specialite;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -51,8 +50,10 @@ public class UserController {
 
     // Adminstrateur seulement
     @GetMapping("/users")
-    public List<User> getUsers() {
-        return service.getUsers();
+    public Page<User> getUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return service.getUsers(page, size);
     }
     
     @GetMapping("/KPIUser")
@@ -66,8 +67,11 @@ public class UserController {
     }
 
     @GetMapping("/clientToAvocat")
-    public List<User> clientToAvocat() {
-        return service.getWantBeAvocat();
+    public Page<User> clientToAvocat(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return service.getWantBeAvocat(page, size);
     }
 
     // Contrôleur pour les avocats

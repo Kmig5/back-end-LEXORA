@@ -2,6 +2,7 @@ package com.example.lexora.publication;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +32,10 @@ public class PublicationController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity<List<Publication>> readPublication() {
-        return ResponseEntity.ok(service.lirePublication());
+    public ResponseEntity<Page<Publication>> readPublication(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(service.lirePublication(page, size));
     }
     
     @GetMapping("/readId")
