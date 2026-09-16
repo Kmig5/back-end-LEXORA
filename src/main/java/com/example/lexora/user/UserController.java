@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,15 +72,20 @@ public class UserController {
 
     // Contrôleur pour les avocats
     @GetMapping("/avocat")
-    public List<User> getAvocats() {
-        return service.getAvocats();
+    public Page<User> getAvocats(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return service.getAvocats(page, size);
     }
 
     @GetMapping("/avocat/recherche")
-    public List<User> getAvocatSearch(
-            @RequestParam("q") String q
+    public Page<User> getAvocatSearch(
+            @RequestParam("q") String q,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
-        return service.getAvocatSearch(q);
+        return service.getAvocatSearch(q, page, size);
     }
 
     @PostMapping("/avocat/inscriptionAvocat")

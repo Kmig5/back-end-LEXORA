@@ -10,6 +10,9 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -116,12 +119,14 @@ public class UserService {
     }
 
     // Service pour les Avocats
-    public List<User> getAvocats() {
-        return repo.getAvocat();
+    public Page<User> getAvocats(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.getAvocat(pageable);
     }
 
-    public List<User> getAvocatSearch(String q) {
-        return repo.rechercheDebounce(q);
+    public Page<User> getAvocatSearch(String q, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.rechercheDebounce(q, pageable);
     }
 
     // Service pour les users clients de base

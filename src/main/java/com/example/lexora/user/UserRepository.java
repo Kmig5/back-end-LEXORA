@@ -4,6 +4,8 @@ import com.example.lexora.publication.Publication;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -54,8 +56,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
         """,
             nativeQuery = true
     )
-    List<User> rechercheDebounce(
-            @Param("q") String q
+    Page<User> rechercheDebounce(
+            @Param("q") String q,
+            Pageable pageable
     ); // méthode pour faire des recherches sur les avocats
 
     @Query("""
@@ -63,7 +66,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
            FROM User a
            WHERE a.typeUtilisateur = 'AVOCAT'
            """)
-    List<User> getAvocat(); // méthode pour récupérer tous les avocats en BD
+    Page<User> getAvocat(Pageable pageable); // méthode pour récupérer tous les avocats en BD
 
     @Query("""
            SELECT COUNT(a) FROM User a

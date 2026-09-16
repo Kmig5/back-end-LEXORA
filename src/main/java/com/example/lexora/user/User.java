@@ -82,9 +82,9 @@ public class User implements UserDetails {
     // Variable spécifique aux avocats
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(
-    name = "specialites",
-    columnDefinition = "jsonb",
-    nullable = true
+            name = "specialites",
+            columnDefinition = "jsonb",
+            nullable = true
     )
     private Set<Specialite> specialite = new HashSet<>();
 
@@ -95,7 +95,7 @@ public class User implements UserDetails {
     private Integer annee;
 
     private String description;
-    
+
     @OneToMany(mappedBy = "avocat")
     @JsonIgnore
     private List<Cabinet> cabinets;
