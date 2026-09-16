@@ -1,6 +1,5 @@
 package com.example.lexora.publication;
 
-import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +38,12 @@ public class PublicationController {
     }
     
     @GetMapping("/readId")
-    public List<Publication> readPublicationByID(
-            @RequestParam UUID id
+    public Page<Publication> readPublicationByID(
+            @RequestParam UUID id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
-        return service.lirePublicationById(id);
+        return service.lirePublicationById(id, page, size);
     }
     
     @PutMapping("/modif")

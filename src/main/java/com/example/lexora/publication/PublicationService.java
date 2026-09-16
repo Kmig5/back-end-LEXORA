@@ -2,7 +2,6 @@ package com.example.lexora.publication;
 
 import com.example.lexora.user.User;
 import com.example.lexora.user.UserRepository;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -49,8 +48,9 @@ public class PublicationService {
         return repo.findAll(pageable);
     }
 
-    public List<Publication> lirePublicationById(UUID id) {
-        return repo.findByUser_Id(id);
+    public Page<Publication> lirePublicationById(UUID id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repo.findByUser_Id(id, pageable);
     }
 
     public String modification(PublicationDTO pub) {
